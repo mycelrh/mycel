@@ -2,16 +2,16 @@
 //
 // Implements the six-state mechanism from docs.html (Sense / Grow / Reinforce /
 // Prune / Reroute / Fossilize) against REAL Coinbase (COIN) daily trading data
-// (sim/coin-daily.csv: date, close, high, low, volume — pulled from Yahoo
+// (sim/coin-daily.csv: date, close, high, low, volume - pulled from Yahoo
 // Finance's public chart API, https://query1.finance.yahoo.com/v8/finance/chart/COIN,
 // one year of daily bars, no API key required).
 //
-// MODELING NOTE — read this before quoting a number from this script anywhere:
+// MODELING NOTE - read this before quoting a number from this script anywhere:
 // the whitepaper's thresholds (grow at 3 blocks, reinforce at 500, prune at
 // 5000) describe a network running on fast chain blocks. Real intraday COIN
 // order flow isn't public for free, so this simulation samples demand once
 // per trading day and treats the day as 200 simulation "ticks" (~7-minute
-// slices) — calibrated so the 500/5000-tick thresholds land inside the
+// slices) - calibrated so the 500/5000-tick thresholds land inside the
 // elevated/quiet streak lengths actually observed in a year of real COIN
 // volume (longest elevated run: 5 days; longest quiet run: 28 days), so
 // REINFORCE and PRUNE are reachable but not automatic. This is a coarse,
@@ -32,7 +32,7 @@ const REINFORCE_TICKS = 500;     // matches whitepaper REINFORCE threshold
 const PRUNE_TICKS = 5000;        // matches whitepaper PRUNE threshold
 const ELEVATED_Z = 1.0;          // volume z-score above which a day counts as "elevated demand"
 const ROLLING_WINDOW = 20;       // trading days used to compute the rolling mean/stdev
-const SEED = 0x4d594331;         // "MYC1" — fixed seed, so reruns are byte-identical
+const SEED = 0x4d594331;         // "MYC1" - fixed seed, so reruns are byte-identical
 
 // ---- deterministic PRNG (mulberry32) so every run produces the same output ----
 function mulberry32(seed) {
@@ -99,7 +99,7 @@ for (let d = 0; d < days.length; d++) {
 
     for (const e of CANDIDATE_EDGES) {
       const st = edgeState[e];
-      // each candidate route senses the day's demand independently — small
+      // each candidate route senses the day's demand independently - small
       // deterministic per-edge jitter so an "elevated" day isn't perfectly
       // uniform across every route, and a quiet day can still throw a brief,
       // harmless blip on any one of them

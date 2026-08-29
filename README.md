@@ -1,6 +1,6 @@
 # MYCEL
 
-A relay network concept for Robinhood Chain whose topology isn't fixed by configuration. Relays sense real trading demand and grow direct connections toward it — the way mycelium grows toward a nutrient source — then prune what goes quiet.
+A relay network concept for Robinhood Chain whose topology isn't fixed by configuration. Relays sense real trading demand and grow direct connections toward it - the way mycelium grows toward a nutrient source - then prune what goes quiet.
 
 **Live site:** https://mycelrh.github.io/mycel/
 **Whitepaper:** https://mycelrh.github.io/mycel/docs.html
@@ -9,11 +9,11 @@ A relay network concept for Robinhood Chain whose topology isn't fixed by config
 
 ## What this actually is
 
-A concept project, not a deployed network. There is no token sale, no contract, no wallet connection anywhere on the site. What's real:
+A concept project, not a deployed network. $MYC is in active development, but there is no token sale, no deployed contract, and no wallet connection anywhere on the site yet. What's real:
 
 - A deterministic simulation (`sim/mycel-sim.js`) of the six-state mechanism described in the whitepaper
 - Run against **251 real trading days of Coinbase (COIN) stock data** (`sim/coin-daily.csv`), pulled from Yahoo Finance's public chart API
-- Every figure quoted on the site — connections grown, reinforced, pruned, and their exact dates — is that script's literal, reproducible output
+- Every figure quoted on the site - connections grown, reinforced, pruned, and their exact dates - is that script's literal, reproducible output
 
 ## Reproduce it
 
@@ -35,7 +35,11 @@ sim/
   mycel-sim.js    the simulation
   coin-daily.csv  real COIN daily OHLCV data
   fossil-record.json / summary.json   generated output (checked in for the explorer/site to read)
-assets/           avatar and banner source (avatar.html, banner.html) + rendered PNGs
+assets/           mycel-avatar.png, mycel-banner.png - rendered full-resolution by
+                  render-avatar.ps1 / render-banner.ps1 (System.Drawing, no
+                  screenshot/upscale step, so no compression artifacts). The
+                  older avatar.html / banner.html are the original SVG design
+                  reference, superseded for actual PNG generation.
 ```
 
 ## Non-affiliation

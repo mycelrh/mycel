@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<title>MYCEL — Explorer</title>
+<title>MYCEL - Explorer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Every day of the MYCEL reference simulation, rendered directly from its own output file. 251 real trading days, no rows hidden.">
 <link rel="icon" type="image/png" href="assets/mycel-avatar.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mycelrh.github.io/mycel/explorer.html">
-<meta property="og:title" content="MYCEL — Explorer">
+<meta property="og:title" content="MYCEL - Explorer">
 <meta property="og:description" content="Every day of the MYCEL reference simulation, rendered directly from its own output file. 251 real trading days, no rows hidden.">
 <meta property="og:image" content="https://mycelrh.github.io/mycel/assets/mycel-banner.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MYCEL — Explorer">
+<meta name="twitter:title" content="MYCEL - Explorer">
 <meta name="twitter:image" content="https://mycelrh.github.io/mycel/assets/mycel-banner.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Fraunces:ital,wght@1,300;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap');
@@ -132,7 +132,7 @@ tbody tr:hover{background:var(--paper-shade)}
     <div class="pbody">
       <p class="eyebrow">Explorer</p>
       <h1>Every day, exactly as the simulation produced it<i>no rows hidden, no rows invented.</i></h1>
-      <p class="lede">This table is <code>sim/fossil-record.json</code> rendered directly in your browser — the same file <code>sim/mycel-sim.js</code> writes to disk when you run it. 251 real trading days, in order, with the mesh's exact state after each one.</p>
+      <p class="lede">This table is <code>sim/fossil-record.json</code> rendered directly in your browser - the same file <code>sim/mycel-sim.js</code> writes to disk when you run it. 251 real trading days, in order, with the mesh's exact state after each one.</p>
     </div>
     <div id="summary-grid" class="grid4"><div class="cell"><div class="num">…</div><div class="lbl">loading summary.json</div></div></div>
     <div class="legend">
@@ -144,7 +144,7 @@ tbody tr:hover{background:var(--paper-shade)}
   </section>
 
   <section class="panel">
-    <div class="phead"><span>Daily record</span><span class="note" id="row-count">—</span></div>
+    <div class="phead"><span>Daily record</span><span class="note" id="row-count">-</span></div>
     <div id="jump" class="skiplist"></div>
     <div class="tablewrap">
       <table>
@@ -188,7 +188,7 @@ async function main() {
     ]);
   } catch (err) {
     document.getElementById('rows').innerHTML =
-      `<tr><td colspan="9" class="error">Could not load sim/summary.json or sim/fossil-record.json (${err.message}). If you opened this file directly (file://), browsers block local fetch() by same-origin rules — serve the folder instead, e.g. <code>python3 -m http.server</code> from the project root, then open http://localhost:8000/explorer.html.</td></tr>`;
+      `<tr><td colspan="9" class="error">Could not load sim/summary.json or sim/fossil-record.json (${err.message}). If you opened this file directly (file://), browsers block local fetch() by same-origin rules - serve the folder instead, e.g. <code>python3 -m http.server</code> from the project root, then open http://localhost:8000/explorer.html.</td></tr>`;
     return;
   }
 
@@ -208,7 +208,7 @@ async function main() {
 
   const rows = fossil.map((d) => {
     const cells = EDGE_COLS.map((e) => dotFor(d.aliveEdges.includes(e))).join('');
-    const events = d.events.length ? d.events.map(badgeFor).join(' ') : '—';
+    const events = d.events.length ? d.events.map(badgeFor).join(' ') : '-';
     return `<tr id="day-${d.day}" class="${d.events.length ? 'has-event' : ''}">
       <td>${d.day}</td>
       <td class="date">${d.date}</td>

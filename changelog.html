@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<title>MYCEL — Changelog</title>
+<title>MYCEL - Changelog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="What actually shipped on MYCEL, and when. A build log, not a marketing timeline.">
 <link rel="icon" type="image/png" href="assets/mycel-avatar.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mycelrh.github.io/mycel/changelog.html">
-<meta property="og:title" content="MYCEL — Changelog">
+<meta property="og:title" content="MYCEL - Changelog">
 <meta property="og:description" content="What actually shipped on MYCEL, and when. A build log, not a marketing timeline.">
 <meta property="og:image" content="https://mycelrh.github.io/mycel/assets/mycel-banner.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MYCEL — Changelog">
+<meta name="twitter:title" content="MYCEL - Changelog">
 <meta name="twitter:image" content="https://mycelrh.github.io/mycel/assets/mycel-banner.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Fraunces:ital,wght@1,300;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap');
@@ -103,8 +103,8 @@ h1 i{display:block;font-family:Fraunces;font-style:italic;font-weight:300;text-t
   <section class="panel">
     <div class="pbody">
       <p class="eyebrow">Changelog</p>
-      <h1>Build log<i>this is day one — read it as that.</i></h1>
-      <p class="lede">MYCEL is a brand-new concept project. Every entry below happened the same day it's dated — there's no manufactured multi-month history here. This log will keep growing as the project does.</p>
+      <h1>Build log<i>this is day one - read it as that.</i></h1>
+      <p class="lede">MYCEL is a brand-new concept project. Every entry below happened the same day it's dated - there's no manufactured multi-month history here. This log will keep growing as the project does.</p>
     </div>
   </section>
 
@@ -121,7 +121,7 @@ h1 i{display:block;font-family:Fraunces;font-style:italic;font-weight:300;text-t
     <div class="entry">
       <div class="date">2026-08-29</div>
       <div><span class="tag tag-data">DATA</span>
-        <p>Pulled 251 real trading days of Coinbase (COIN) daily close/high/low/volume from Yahoo Finance's public chart API — see <code>sim/coin-daily.csv</code>.</p>
+        <p>Pulled 251 real trading days of Coinbase (COIN) daily close/high/low/volume from Yahoo Finance's public chart API - see <code>sim/coin-daily.csv</code>.</p>
       </div>
     </div>
 
@@ -142,14 +142,14 @@ h1 i{display:block;font-family:Fraunces;font-style:italic;font-weight:300;text-t
     <div class="entry">
       <div class="date">2026-08-29</div>
       <div><span class="tag tag-add">ADD</span>
-        <p>Published <a href="explorer.html">explorer.html</a> — the full 251-day simulation record, rendered directly from <code>sim/fossil-record.json</code>.</p>
+        <p>Published <a href="explorer.html">explorer.html</a> - the full 251-day simulation record, rendered directly from <code>sim/fossil-record.json</code>.</p>
       </div>
     </div>
 
     <div class="entry">
       <div class="date">2026-08-29</div>
       <div><span class="tag tag-add">ADD</span>
-        <p>Published <a href="verify.html">verify.html</a> — SHA-256 hashes of the core documents, checkable in-browser or offline.</p>
+        <p>Published <a href="verify.html">verify.html</a> - SHA-256 hashes of the core documents, checkable in-browser or offline.</p>
       </div>
     </div>
 
@@ -177,21 +177,28 @@ h1 i{display:block;font-family:Fraunces;font-style:italic;font-weight:300;text-t
     <div class="entry">
       <div class="date">2026-08-29</div>
       <div><span class="tag tag-add">ADD</span>
-        <p>Safety checklist panel on the overview page: no contract, no sale, no wallet-connect, source public, figures reproducible — stated plainly instead of left implicit.</p>
+        <p>Safety checklist panel on the overview page: no contract, no sale, no wallet-connect, source public, figures reproducible - stated plainly instead of left implicit.</p>
       </div>
     </div>
 
     <div class="entry">
       <div class="date">2026-08-29</div>
       <div><span class="tag tag-add">ADD</span>
-        <p><code>.github/workflows/update-sim.yml</code>: a daily job that refetches real COIN data, reruns the simulation, and commits the result if it changed. First manual run succeeded and found real new data to commit — see the <a href="https://github.com/mycelrh/mycel/commits/main">commit history</a>.</p>
+        <p><code>.github/workflows/update-sim.yml</code>: a daily job that refetches real COIN data, reruns the simulation, and commits the result if it changed. First manual run succeeded and found real new data to commit - see the <a href="https://github.com/mycelrh/mycel/commits/main">commit history</a>.</p>
       </div>
     </div>
 
     <div class="entry">
       <div class="date">2026-08-29</div>
       <div><span class="tag tag-fix">FIX</span>
-        <p>Every hash pinned on <a href="verify.html">verify.html</a> was wrong from the moment it launched: Windows' line-ending conversion meant the local files used to compute them (CRLF) didn't match what the repo actually stores and serves (LF), so the page would have reported "changed" on files nobody had touched. Added <code>.gitattributes</code>, disabled autocrlf for this repo, and re-pinned every hash against the real served bytes — confirmed matching live with the page's own <strong>Check now</strong> button.</p>
+        <p>Every hash pinned on <a href="verify.html">verify.html</a> was wrong from the moment it launched: Windows' line-ending conversion meant the local files used to compute them (CRLF) didn't match what the repo actually stores and serves (LF), so the page would have reported "changed" on files nobody had touched. Added <code>.gitattributes</code>, disabled autocrlf for this repo, and re-pinned every hash against the real served bytes - confirmed matching live with the page's own <strong>Check now</strong> button.</p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="date">2026-08-29</div>
+      <div><span class="tag tag-add">ADD</span>
+        <p>$MYC token development has begun. No contract is deployed yet, and nothing on this site changes as a result - no sale, no presale, no wallet connection. The whitepaper's <a href="docs.html#token">$MYC token section</a> and the site's status line now say so plainly.</p>
       </div>
     </div>
   </section>

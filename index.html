@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <title>MYCEL</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="A self-growing relay network concept for Robinhood Chain. Connections grow toward real trading demand and prune when it fades. Reference simulation run against real COIN trading data — reproduce it yourself.">
+<meta name="description" content="A self-growing relay network concept for Robinhood Chain. Connections grow toward real trading demand and prune when it fades. Reference simulation run against real COIN trading data - reproduce it yourself.">
 <link rel="icon" type="image/png" href="assets/mycel-avatar.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mycelrh.github.io/mycel/">
@@ -267,7 +267,7 @@ figcaption{margin-top:.9rem;font-size:.78rem;color:var(--ink-soft);line-height:1
 </div>
 
 <div class="rail" aria-hidden="true">
-  <span>GROWS TOWARD DEMAND &nbsp;—&nbsp; PRUNES WHAT GOES QUIET &nbsp;—&nbsp; GROWS TOWARD DEMAND &nbsp;—&nbsp; PRUNES WHAT GOES QUIET &nbsp;—</span>
+  <span>GROWS TOWARD DEMAND &nbsp;·&nbsp; PRUNES WHAT GOES QUIET &nbsp;·&nbsp; GROWS TOWARD DEMAND &nbsp;·&nbsp; PRUNES WHAT GOES QUIET &nbsp;·</span>
 </div>
 
 <main>
@@ -277,7 +277,7 @@ figcaption{margin-top:.9rem;font-size:.78rem;color:var(--ink-soft);line-height:1
       <div>
         <p class="eyebrow">Routing protocol · Robinhood Chain</p>
         <h1>Most networks are wired once and frozen<i>this one keeps growing toward wherever COIN is trading.</i></h1>
-        <p class="hero-sub">MYCEL is a relay mesh that reshapes its own topology in real time. When demand for a route climbs, nearby relays grow direct connections toward it — the way mycelium extends toward a nutrient source. When demand cools, the unused connections are pruned. No one edits a config file either way.</p>
+        <p class="hero-sub">MYCEL is a relay mesh that reshapes its own topology in real time. When demand for a route climbs, nearby relays grow direct connections toward it - the way mycelium extends toward a nutrient source. When demand cools, the unused connections are pruned. No one edits a config file either way.</p>
         <div class="strip">
           <a href="#growth">See how it grows</a>
           <a href="#spec">Read the growth spec</a>
@@ -290,7 +290,7 @@ figcaption{margin-top:.9rem;font-size:.78rem;color:var(--ink-soft);line-height:1
           <dt>Genesis route</dt><dd class="pair">MYC / COIN·USD</dd>
           <dt>Live connections</dt><dd>16 <span style="font-weight:400;color:var(--ink-soft)">(12 baseline + 4 grown)</span></dd>
           <dt>Sim window</dt><dd>251 trading days</dd>
-          <dt>Status</dt><dd>Concept · reference sim</dd>
+          <dt>Status</dt><dd>Concept · $MYC in development</dd>
         </dl>
         <hr>
         <dl>
@@ -299,7 +299,7 @@ figcaption{margin-top:.9rem;font-size:.78rem;color:var(--ink-soft);line-height:1
         </dl>
       </div>
     </div>
-    <div class="fine">Genesis route is a reference simulation, not a deployed testnet: <code>sim/mycel-sim.js</code> runs the six-state mechanism below against 251 real trading days of Coinbase (COIN) stock volume. Every number on this page is that script's literal output — see <a href="#evidence">Reproduce this</a>.</div>
+    <div class="fine">Genesis route is a reference simulation, not a deployed testnet: <code>sim/mycel-sim.js</code> runs the six-state mechanism below against 251 real trading days of Coinbase (COIN) stock volume. Every number on this page is that script's literal output - see <a href="#evidence">Reproduce this</a>.</div>
   </section>
 
   <section class="panel" id="growth">
@@ -308,11 +308,11 @@ figcaption{margin-top:.9rem;font-size:.78rem;color:var(--ink-soft);line-height:1
       <table class="seq">
         <thead><tr><th>No.</th><th>State</th><th>What happens</th></tr></thead>
         <tbody>
-          <tr><td class="mk">01</td><td class="name">Sense</td><td class="desc">Every relay measures real traffic passing through its neighbors, block by block — like a nerve ending reading pressure, not a dashboard someone checks.</td></tr>
+          <tr><td class="mk">01</td><td class="name">Sense</td><td class="desc">Every relay measures real traffic passing through its neighbors, block by block - like a nerve ending reading pressure, not a dashboard someone checks.</td></tr>
           <tr><td class="mk">02</td><td class="name">Grow</td><td class="desc">When a path carries sustained demand for three consecutive blocks, nearby relays spin up a new direct connection toward it instead of routing the long way around.</td></tr>
-          <tr><td class="mk">03</td><td class="name">Reinforce</td><td class="desc">A connection that keeps carrying fast, low-latency traffic for 500+ blocks gets more bandwidth and more stake weight — automatically, without a vote.</td></tr>
+          <tr><td class="mk">03</td><td class="name">Reinforce</td><td class="desc">A connection that keeps carrying fast, low-latency traffic for 500+ blocks gets more bandwidth and more stake weight - automatically, without a vote.</td></tr>
           <tr><td class="mk">04</td><td class="name">Prune</td><td class="desc">A connection with no traffic for 5,000 consecutive blocks weakens and is retired, freeing capacity for wherever demand is growing next.</td></tr>
-          <tr><td class="mk">05</td><td class="name">Reroute</td><td class="desc">If a live connection is cut — a node drops offline — traffic finds the next-strongest surviving path within a single block. No manual failover list.</td></tr>
+          <tr><td class="mk">05</td><td class="name">Reroute</td><td class="desc">If a live connection is cut - a node drops offline - traffic finds the next-strongest surviving path within a single block. No manual failover list.</td></tr>
           <tr><td class="mk">06</td><td class="name">Fossilize</td><td class="desc">The mesh's exact shape at every block height is recorded permanently, so anyone can see precisely how the network looked at any point in its history.</td></tr>
         </tbody>
       </table>
@@ -410,21 +410,21 @@ figcaption{margin-top:.9rem;font-size:.78rem;color:var(--ink-soft);line-height:1
       </div>
       <div class="cell" tabindex="0">
         <div class="num">4</div>
-        <div class="lbl">Reinforce events — a route earning higher stake weight</div>
+        <div class="lbl">Reinforce events - a route earning higher stake weight</div>
         <div class="tip">All four surviving routes reinforced together on 2026-02-04, after ~2.5 days of sustained elevated COIN volume.</div>
       </div>
       <div class="cell" tabindex="0">
         <div class="num">2</div>
-        <div class="lbl">Prune events — a route retired for going quiet</div>
+        <div class="lbl">Prune events - a route retired for going quiet</div>
         <div class="tip">R1-COIN and R5-COIN pruned on 2025-12-29 / 2025-12-30, after roughly 20 real trading days of below-average COIN volume.</div>
       </div>
       <div class="cell" tabindex="0">
         <div class="num">251</div>
         <div class="lbl">Real trading days simulated, Aug 29 2025 – Aug 28 2026</div>
-        <div class="tip">Daily close/high/low/volume for COIN, pulled from Yahoo Finance's public chart API — see sim/coin-daily.csv.</div>
+        <div class="tip">Daily close/high/low/volume for COIN, pulled from Yahoo Finance's public chart API - see sim/coin-daily.csv.</div>
       </div>
     </div>
-    <div class="fine">These are not testnet telemetry — they are the literal output of <code>sim/mycel-sim.js</code>, a deterministic simulation seeded with a fixed value (<code>0x4d594331</code>) and run against real COIN market data. Run it yourself: <code>node sim/mycel-sim.js</code>. Full daily record: <a href="explorer.html">explorer</a>.</div>
+    <div class="fine">These are not testnet telemetry - they are the literal output of <code>sim/mycel-sim.js</code>, a deterministic simulation seeded with a fixed value (<code>0x4d594331</code>) and run against real COIN market data. Run it yourself: <code>node sim/mycel-sim.js</code>. Full daily record: <a href="explorer.html">explorer</a>.</div>
   </section>
 
   <section class="panel" id="spec">
@@ -434,10 +434,10 @@ figcaption{margin-top:.9rem;font-size:.78rem;color:var(--ink-soft);line-height:1
         <thead><tr><th>State</th><th>Trigger</th><th>What grows</th><th>What gets cut</th></tr></thead>
         <tbody>
           <tr><td>Quiet</td><td>Baseline traffic only</td><td>Nothing new</td><td>Nothing yet</td></tr>
-          <tr><td>Surge</td><td>Sustained demand for 3+ consecutive blocks on one route</td><td>Direct shortcut connections toward the hot node</td><td>—</td></tr>
-          <tr><td>Reinforce</td><td>A grown connection stays fast for 500+ blocks</td><td>Bandwidth and stake weight on that connection</td><td>—</td></tr>
-          <tr><td>Prune</td><td>No traffic for 5,000 consecutive blocks</td><td>—</td><td>The connection is retired, capacity freed</td></tr>
-          <tr><td>Fossilize</td><td>Every block, automatically</td><td>A permanent record of the mesh's exact shape</td><td>Nothing — the history is kept forever</td></tr>
+          <tr><td>Surge</td><td>Sustained demand for 3+ consecutive blocks on one route</td><td>Direct shortcut connections toward the hot node</td><td>-</td></tr>
+          <tr><td>Reinforce</td><td>A grown connection stays fast for 500+ blocks</td><td>Bandwidth and stake weight on that connection</td><td>-</td></tr>
+          <tr><td>Prune</td><td>No traffic for 5,000 consecutive blocks</td><td>-</td><td>The connection is retired, capacity freed</td></tr>
+          <tr><td>Fossilize</td><td>Every block, automatically</td><td>A permanent record of the mesh's exact shape</td><td>Nothing - the history is kept forever</td></tr>
         </tbody>
       </table>
     </div>
@@ -446,21 +446,21 @@ figcaption{margin-top:.9rem;font-size:.78rem;color:var(--ink-soft);line-height:1
   <section class="panel" id="evidence">
     <div class="phead"><span>Reproduce this</span><span class="note">real data, fixed seed, same output every run</span></div>
     <div class="pbody">
-      <p style="max-width:68ch;color:var(--ink-soft);line-height:1.6;margin:0 0 1.2rem;font-size:.85rem">Every figure on this page traces back to one script: <code>sim/mycel-sim.js</code>. It implements the six states above exactly as specified, samples demand once per real trading day from <code>sim/coin-daily.csv</code> (COIN daily close/high/low/volume, pulled from Yahoo Finance's public chart API — no key required), and runs on a fixed seed, so anyone who runs it gets this same dated event log back:</p>
+      <p style="max-width:68ch;color:var(--ink-soft);line-height:1.6;margin:0 0 1.2rem;font-size:.85rem">Every figure on this page traces back to one script: <code>sim/mycel-sim.js</code>. It implements the six states above exactly as specified, samples demand once per real trading day from <code>sim/coin-daily.csv</code> (COIN daily close/high/low/volume, pulled from Yahoo Finance's public chart API - no key required), and runs on a fixed seed, so anyone who runs it gets this same dated event log back:</p>
 
       <figure style="margin:0 0 1.4rem">
         <svg id="chart-svg" viewBox="0 0 900 260" role="img" aria-label="COIN daily trading volume across 251 real trading days, with GROW, REINFORCE, and PRUNE events marked at the routes they triggered." style="width:100%;height:auto;display:block;background:var(--paper-shade)"></svg>
-        <figcaption style="margin-top:.6rem;font-size:.72rem;color:var(--ink-soft)">Real COIN daily volume, Aug 29 2025 – Aug 28 2026. <span style="color:var(--live)">&#9679;</span> grow &nbsp; <span style="color:var(--field-deep)">&#9679;</span> reinforce &nbsp; <span style="color:var(--hot)">&#9679;</span> prune — hover a marker for the exact route and date.</figcaption>
+        <figcaption style="margin-top:.6rem;font-size:.72rem;color:var(--ink-soft)">Real COIN daily volume, Aug 29 2025 – Aug 28 2026. <span style="color:var(--live)">&#9679;</span> grow &nbsp; <span style="color:var(--field-deep)">&#9679;</span> reinforce &nbsp; <span style="color:var(--hot)">&#9679;</span> prune - hover a marker for the exact route and date.</figcaption>
       </figure>
 
       <table class="seq">
         <thead><tr><th>Date</th><th>Route(s)</th><th>Event</th></tr></thead>
         <tbody>
-          <tr><td class="mk">01</td><td class="name">2025-09-29</td><td class="desc">R1-COIN, R2-COIN, R5-COIN, COIN-CHAIN — <strong>GROW</strong>. First sustained demand spike in the dataset (day 20, after the 20-day rolling-average warmup).</td></tr>
-          <tr><td class="mk">02</td><td class="name">2025-12-29</td><td class="desc">R1-COIN — <strong>PRUNE</strong>, after roughly 20 real trading days of below-average COIN volume.</td></tr>
-          <tr><td class="mk">03</td><td class="name">2025-12-30</td><td class="desc">R5-COIN — <strong>PRUNE</strong>, same quiet stretch.</td></tr>
-          <tr><td class="mk">04</td><td class="name">2026-01-05</td><td class="desc">R1-COIN, R5-COIN — <strong>GROW</strong> again, once COIN volume climbed back above the rolling average.</td></tr>
-          <tr><td class="mk">05</td><td class="name">2026-02-04</td><td class="desc">R1-COIN, R2-COIN, R5-COIN, COIN-CHAIN — <strong>REINFORCE</strong>, after roughly 2.5 consecutive days of sustained elevated volume.</td></tr>
+          <tr><td class="mk">01</td><td class="name">2025-09-29</td><td class="desc">R1-COIN, R2-COIN, R5-COIN, COIN-CHAIN - <strong>GROW</strong>. First sustained demand spike in the dataset (day 20, after the 20-day rolling-average warmup).</td></tr>
+          <tr><td class="mk">02</td><td class="name">2025-12-29</td><td class="desc">R1-COIN - <strong>PRUNE</strong>, after roughly 20 real trading days of below-average COIN volume.</td></tr>
+          <tr><td class="mk">03</td><td class="name">2025-12-30</td><td class="desc">R5-COIN - <strong>PRUNE</strong>, same quiet stretch.</td></tr>
+          <tr><td class="mk">04</td><td class="name">2026-01-05</td><td class="desc">R1-COIN, R5-COIN - <strong>GROW</strong> again, once COIN volume climbed back above the rolling average.</td></tr>
+          <tr><td class="mk">05</td><td class="name">2026-02-04</td><td class="desc">R1-COIN, R2-COIN, R5-COIN, COIN-CHAIN - <strong>REINFORCE</strong>, after roughly 2.5 consecutive days of sustained elevated volume.</td></tr>
         </tbody>
       </table>
       <div class="strip">
@@ -477,17 +477,17 @@ figcaption{margin-top:.9rem;font-size:.78rem;color:var(--ink-soft);line-height:1
       <table class="spec">
         <thead><tr><th>Check</th><th>Result</th><th>Why</th></tr></thead>
         <tbody>
-          <tr><td>Contract deployed</td><td style="color:var(--ink-soft);font-weight:700">NONE</td><td>Nothing exists on any chain yet — there is no address to check, because there is nothing to check.</td></tr>
-          <tr><td>Token sale / presale</td><td style="color:var(--ink-soft);font-weight:700">NONE</td><td>No sale has happened or is planned on this site. Nobody can send this project money through anything here.</td></tr>
-          <tr><td>Wallet connect</td><td style="color:var(--live);font-weight:700">ABSENT</td><td>Every page on this site is static HTML. Open the source — there is no wallet-connect code anywhere to find.</td></tr>
-          <tr><td>Liquidity pool</td><td style="color:var(--ink-soft);font-weight:700">N/A</td><td>No token exists, so there is no liquidity to lock, drain, or lie about.</td></tr>
+          <tr><td>Contract deployed</td><td style="color:var(--ink-soft);font-weight:700">NONE</td><td>Nothing exists on any chain yet - there is no address to check, because there is nothing to check.</td></tr>
+          <tr><td>Token sale / presale</td><td style="color:var(--ink-soft);font-weight:700">NONE</td><td>$MYC is in development, but no sale has happened or is planned on this site. Nobody can send this project money through anything here.</td></tr>
+          <tr><td>Wallet connect</td><td style="color:var(--live);font-weight:700">ABSENT</td><td>Every page on this site is static HTML. Open the source - there is no wallet-connect code anywhere to find.</td></tr>
+          <tr><td>Liquidity pool</td><td style="color:var(--ink-soft);font-weight:700">N/A</td><td>No token is deployed yet, so there is no liquidity to lock, drain, or lie about.</td></tr>
           <tr><td>Ownership / mint function</td><td style="color:var(--ink-soft);font-weight:700">N/A</td><td>No contract means no owner key and no mint function to renounce or abuse.</td></tr>
           <tr><td>Source code</td><td style="color:var(--live);font-weight:700">PUBLIC</td><td>The whole site, the simulation, and the raw market data it runs on: <a href="https://github.com/mycelrh/mycel">github.com/mycelrh/mycel</a>.</td></tr>
           <tr><td>Figures on this page</td><td style="color:var(--live);font-weight:700">REPRODUCIBLE</td><td>Every number traces to <code>sim/mycel-sim.js</code>. Run it yourself, or check the hashes on <a href="verify.html">verify.html</a>.</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="fine">This is what "pre-launch concept" actually means here: nothing to buy, nothing to connect, nothing to rug. That will change if this ever becomes a real deployment — this checklist will change with it, and the changelog will say so.</div>
+    <div class="fine">This is what "pre-launch concept" actually means here: nothing to buy, nothing to connect, nothing to rug. That will change if this ever becomes a real deployment - this checklist will change with it, and the changelog will say so.</div>
   </section>
 
   <section class="panel" id="risk">
@@ -529,7 +529,7 @@ figcaption{margin-top:.9rem;font-size:.78rem;color:var(--ink-soft);line-height:1
         <dd id="docrev">2026.08.29</dd>
       </dl>
     </div>
-    <div class="legal">This page describes a concept protocol for illustration only. It is not a live network, not an offer to sell any token or security, and does not involve wallet connection or deposits. Figures on this page are the literal output of <code>sim/mycel-sim.js</code> run against real COIN market data — see <a href="explorer.html">explorer</a> and <a href="verify.html">verify</a>. MYCEL is an independent concept project, not affiliated with, endorsed by, or built by Robinhood Markets, Inc.; "Robinhood Chain" is referenced only as the intended deployment target.</div>
+    <div class="legal">This page describes a concept protocol for illustration only. It is not a live network, not an offer to sell any token or security, and does not involve wallet connection or deposits. Figures on this page are the literal output of <code>sim/mycel-sim.js</code> run against real COIN market data - see <a href="explorer.html">explorer</a> and <a href="verify.html">verify</a>. MYCEL is an independent concept project, not affiliated with, endorsed by, or built by Robinhood Markets, Inc.; "Robinhood Chain" is referenced only as the intended deployment target.</div>
   </section>
 
 </main>
@@ -597,7 +597,7 @@ figcaption{margin-top:.9rem;font-size:.78rem;color:var(--ink-soft);line-height:1
       day.events.forEach(function (ev) {
         var color = EVENT_COLOR[ev.type] || 'var(--ink)';
         markers += '<circle cx="' + x(i) + '" cy="' + y(day.volume) + '" r="4.5" fill="' + color + '" stroke="var(--paper)" stroke-width="1.2">' +
-          '<title>' + day.date + ' — ' + ev.edge + ' — ' + ev.type + '</title></circle>';
+          '<title>' + day.date + ' - ' + ev.edge + ' - ' + ev.type + '</title></circle>';
       });
     });
 
@@ -607,7 +607,7 @@ figcaption{margin-top:.9rem;font-size:.78rem;color:var(--ink-soft);line-height:1
       markers;
   }).catch(function (err) {
     var svg = document.getElementById('chart-svg');
-    if (svg) svg.outerHTML = '<div class="fine" style="border:var(--bar) solid var(--ink)">Could not load the chart data (' + err.message + '). If you opened this file directly, serve the folder over http instead — e.g. <code>python3 -m http.server</code>.</div>';
+    if (svg) svg.outerHTML = '<div class="fine" style="border:var(--bar) solid var(--ink)">Could not load the chart data (' + err.message + '). If you opened this file directly, serve the folder over http instead - e.g. <code>python3 -m http.server</code>.</div>';
   });
 })();
 </script>

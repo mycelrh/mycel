@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<title>MYCEL — Verify</title>
+<title>MYCEL - Verify</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Don't trust the page — check the bytes. SHA-256 hashes of the MYCEL core files, verifiable in-browser or offline.">
+<meta name="description" content="Don't trust the page - check the bytes. SHA-256 hashes of the MYCEL core files, verifiable in-browser or offline.">
 <link rel="icon" type="image/png" href="assets/mycel-avatar.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mycelrh.github.io/mycel/verify.html">
-<meta property="og:title" content="MYCEL — Verify">
-<meta property="og:description" content="Don't trust the page — check the bytes. SHA-256 hashes of the MYCEL core files, verifiable in-browser or offline.">
+<meta property="og:title" content="MYCEL - Verify">
+<meta property="og:description" content="Don't trust the page - check the bytes. SHA-256 hashes of the MYCEL core files, verifiable in-browser or offline.">
 <meta property="og:image" content="https://mycelrh.github.io/mycel/assets/mycel-banner.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MYCEL — Verify">
+<meta name="twitter:title" content="MYCEL - Verify">
 <meta name="twitter:image" content="https://mycelrh.github.io/mycel/assets/mycel-banner.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Fraunces:ital,wght@1,300;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap');
@@ -121,7 +121,7 @@ tbody tr:last-child td{border-bottom:0}
     <div class="pbody">
       <p class="eyebrow">Verify</p>
       <h1>Don't trust the page<i>check the bytes yourself.</i></h1>
-      <p class="lede">Each row below pins a SHA-256 hash of a real file in this project, computed when this page was last published. Press <strong>Check now</strong> and your browser will re-fetch that exact file and hash it locally with <code>crypto.subtle.digest</code> — nothing is sent anywhere. If the page has been edited since, the hash won't match, and you'll see it fail here rather than take our word for it.</p>
+      <p class="lede">Each row below pins a SHA-256 hash of a real file in this project, computed when this page was last published. Press <strong>Check now</strong> and your browser will re-fetch that exact file and hash it locally with <code>crypto.subtle.digest</code> - nothing is sent anywhere. If the page has been edited since, the hash won't match, and you'll see it fail here rather than take our word for it.</p>
     </div>
   </section>
 
@@ -151,9 +151,9 @@ tbody tr:last-child td{border-bottom:0}
 
 <script>
 const FILES = [
-  { name: 'index.html', hash: 'cb8df7c877af84392c177d3b3040ae29dd9b3f062c2ee7e24ac683e60c426190' },
-  { name: 'docs.html', hash: 'cf070ec3248c659507f6efff4e8ef9271e315333a224725a1887e583d994a670' },
-  { name: 'sim/mycel-sim.js', hash: '5e2ae5436c10678d22458aeb3c546cec56d5e66cdcabac72765459d2148ba0c3' },
+  { name: 'index.html', hash: '1bdbd300122e1339806e273ff5cb748459765c22de63abdcede89517d34d2798' },
+  { name: 'docs.html', hash: '618881c6db16d9c907fc7dd24e44340b12b20e75dd392d3974a43a522d7fd94d' },
+  { name: 'sim/mycel-sim.js', hash: '5b8ab14286c45e2d4e0820f441774fe10d598de861c0003dd0fc3b0cbffa81c5' },
   { name: 'sim/coin-daily.csv', hash: 'a3e26eb1f1390cbb012ec091e0db67668241e93b5450b91ea47b51381c0d21e6' },
   { name: 'sim/summary.json', hash: '97ecc877d790ac39d3264b40e6e2a5642ab3739b084e06f252d058e5b0119f81' },
 ];
@@ -196,7 +196,7 @@ async function check(i) {
   } catch (err) {
     statusEl.textContent = 'could not fetch';
     statusEl.className = 'status error';
-    statusEl.title = err.message + ' — if opened via file://, serve the folder over http instead';
+    statusEl.title = err.message + ' - if opened via file://, serve the folder over http instead';
   }
 }
 

@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<title>MYCEL — Docs</title>
+<title>MYCEL - Docs</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="MYCEL whitepaper: the six-state grow/reinforce/prune mechanism, the $MYC token, and the reference simulation run against real COIN trading data.">
 <link rel="icon" type="image/png" href="assets/mycel-avatar.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mycelrh.github.io/mycel/docs.html">
-<meta property="og:title" content="MYCEL — Whitepaper">
+<meta property="og:title" content="MYCEL - Whitepaper">
 <meta property="og:description" content="The six-state grow/reinforce/prune mechanism, the $MYC token, and the reference simulation run against real COIN trading data.">
 <meta property="og:image" content="https://mycelrh.github.io/mycel/assets/mycel-banner.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MYCEL — Whitepaper">
+<meta name="twitter:title" content="MYCEL - Whitepaper">
 <meta name="twitter:image" content="https://mycelrh.github.io/mycel/assets/mycel-banner.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Fraunces:ital,wght@1,300;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap');
@@ -153,7 +153,7 @@ dl.gloss dd{margin:0;font-size:.85rem;color:var(--ink-soft);line-height:1.5}
       <div class="meta">
         <span><b>Chain</b> Robinhood Chain · L2</span>
         <span><b>Token</b> $MYC</span>
-        <span><b>Status</b> Concept · reference sim</span>
+        <span><b>Status</b> Concept · $MYC in development</span>
         <span><b>Spec ID</b> MYC-0114-RH</span>
       </div>
     </div>
@@ -166,13 +166,13 @@ dl.gloss dd{margin:0;font-size:.85rem;color:var(--ink-soft);line-height:1.5}
 
     <section class="clause" id="problem">
       <h2><span class="no">02</span> The problem with wiring a network once</h2>
-      <p>Most relay networks are topology-first: someone decides which nodes talk to which, ships that configuration, and only revisits it during an incident. That works until demand moves somewhere the configuration didn't anticipate — a new asset gets popular, a region spikes, a route that used to be quiet becomes the busiest path on the network. Someone has to notice, then someone has to redeploy.</p>
+      <p>Most relay networks are topology-first: someone decides which nodes talk to which, ships that configuration, and only revisits it during an incident. That works until demand moves somewhere the configuration didn't anticipate - a new asset gets popular, a region spikes, a route that used to be quiet becomes the busiest path on the network. Someone has to notice, then someone has to redeploy.</p>
       <p>On a chain built for 24-hour markets, that lag is the problem. A route needs to be able to widen itself between one block and the next, and narrow back down just as automatically once the moment passes.</p>
     </section>
 
     <section class="clause" id="mechanism">
-      <h2><span class="no">03</span> The mechanism <i>— six states, one loop</i></h2>
-      <p>Every relay runs the same loop. There is no central scheduler and no config file to edit — the states below are the whole protocol.</p>
+      <h2><span class="no">03</span> The mechanism <i>- six states, one loop</i></h2>
+      <p>Every relay runs the same loop. There is no central scheduler and no config file to edit - the states below are the whole protocol.</p>
       <table>
         <thead><tr><th>State</th><th>Condition</th><th>Effect</th></tr></thead>
         <tbody>
@@ -187,8 +187,8 @@ dl.gloss dd{margin:0;font-size:.85rem;color:var(--ink-soft);line-height:1.5}
     </section>
 
     <section class="clause" id="route">
-      <h2><span class="no">04</span> Genesis route <i>— MYC / COIN·USD</i></h2>
-      <p>Mycel's first demonstration route connects its relay mesh to the tokenized <strong>COIN·USD</strong> pair on Robinhood Chain. Coinbase-linked demand tends to move in sharp bursts — it climbs hard whenever crypto markets move — which makes it a clear, visible test of whether the mesh actually grows and prunes the way the mechanism describes, rather than a synthetic benchmark.</p>
+      <h2><span class="no">04</span> Genesis route <i>- MYC / COIN·USD</i></h2>
+      <p>Mycel's first demonstration route connects its relay mesh to the tokenized <strong>COIN·USD</strong> pair on Robinhood Chain. Coinbase-linked demand tends to move in sharp bursts - it climbs hard whenever crypto markets move - which makes it a clear, visible test of whether the mesh actually grows and prunes the way the mechanism describes, rather than a synthetic benchmark.</p>
       <p>No network is deployed yet, so this route is exercised by <code>sim/mycel-sim.js</code>: a deterministic implementation of the six states, run against 251 real trading days of COIN daily volume (Aug 29 2025 – Aug 28 2026, from Yahoo Finance's public chart API). On a fixed seed, it reproduces this exact dated event log every time:</p>
       <table>
         <thead><tr><th>Date</th><th>Route(s)</th><th>Event</th></tr></thead>
@@ -205,13 +205,13 @@ dl.gloss dd{margin:0;font-size:.85rem;color:var(--ink-soft);line-height:1.5}
 
     <section class="clause" id="token">
       <h2><span class="no">05</span> $MYC token</h2>
-      <p>$MYC has three jobs on the network:</p>
+      <p>$MYC is in active development - no contract is deployed yet, and there is no sale, presale, or wallet connection anywhere on this site. When it exists on-chain, it has three jobs on the network:</p>
       <table>
         <thead><tr><th>Use</th><th>Description</th></tr></thead>
         <tbody>
           <tr><td>Relay bonding</td><td>Anyone running a relay posts $MYC as a bond. A relay that reports bad demand signals or fails to route honestly can have its bond slashed.</td></tr>
           <tr><td>Growth incentive</td><td>Relays that grow connections which get reinforced (proven genuinely useful, not just busy briefly) earn $MYC from the growth incentive pool.</td></tr>
-          <tr><td>Threshold governance</td><td>The block-count thresholds in the mechanism above — 3 blocks to grow, 500 to reinforce, 5,000 to prune — are protocol parameters $MYC holders can vote to adjust as real traffic patterns emerge.</td></tr>
+          <tr><td>Threshold governance</td><td>The block-count thresholds in the mechanism above - 3 blocks to grow, 500 to reinforce, 5,000 to prune - are protocol parameters $MYC holders can vote to adjust as real traffic patterns emerge.</td></tr>
         </tbody>
       </table>
     </section>
@@ -236,8 +236,8 @@ dl.gloss dd{margin:0;font-size:.85rem;color:var(--ink-soft);line-height:1.5}
     <section class="clause" id="roadmap">
       <h2><span class="no">07</span> Roadmap</h2>
       <div class="phasegrid">
-        <div class="phase"><span class="tag done">Phase 0 — done</span><p>Mechanism design. Reference simulation (<code>sim/mycel-sim.js</code>) built and run against a year of real COIN trading data.</p></div>
-        <div class="phase"><span class="tag now">Phase 1 — now</span><p>Concept site published: whitepaper, reproducible simulation, explorer and verify pages. No deployed network yet.</p></div>
+        <div class="phase"><span class="tag done">Phase 0 - done</span><p>Mechanism design. Reference simulation (<code>sim/mycel-sim.js</code>) built and run against a year of real COIN trading data.</p></div>
+        <div class="phase"><span class="tag now">Phase 1 - now</span><p>Concept site published: whitepaper, reproducible simulation, explorer and verify pages. No deployed network yet.</p></div>
         <div class="phase"><span class="tag">Phase 2</span><p>First real testnet. Open relay client and bonding. Second and third demonstration routes.</p></div>
         <div class="phase"><span class="tag">Phase 3</span><p>Independent audit of the slashing and threshold-governance logic before any mainnet candidate.</p></div>
       </div>
@@ -248,7 +248,7 @@ dl.gloss dd{margin:0;font-size:.85rem;color:var(--ink-soft);line-height:1.5}
       <dl class="gloss">
         <dt>Relay</dt><dd>A node that routes traffic between other relays and Robinhood Chain, and senses demand as it does.</dd>
         <dt>Route</dt><dd>A connection between two relays, or between a relay and a chain endpoint.</dd>
-        <dt>Genesis route</dt><dd>The first live route the network was deployed to demonstrate — currently MYC/COIN·USD.</dd>
+        <dt>Genesis route</dt><dd>The first live route the network was deployed to demonstrate - currently MYC/COIN·USD.</dd>
         <dt>Fossil record</dt><dd>The permanent, block-by-block history of the mesh's shape.</dd>
         <dt>Threshold</dt><dd>A block-count trigger (grow, reinforce, prune) governed by $MYC holders.</dd>
       </dl>
@@ -256,4 +256,4 @@ dl.gloss dd{margin:0;font-size:.85rem;color:var(--ink-soft);line-height:1.5}
   </article>
 </div>
 
-<div class="colophon">This document describes a concept protocol for illustration only. It is not a live network, not an offer to sell any token or security, and does not involve wallet connection or deposits. Figures cited above are the output of <code>sim/mycel-sim.js</code> run against real COIN market data — see the <a href="explorer.html" style="color:#fbfaf7">explorer</a> and <a href="verify.html" style="color:#fbfaf7">verify</a> pages. MYCEL is an independent concept project, not affiliated with, endorsed by, or built by Robinhood Markets, Inc.; "Robinhood Chain" is referenced only as the intended deployment target. Source: <a href="https://github.com/mycelrh/mycel" style="color:#fbfaf7">github.com/mycelrh/mycel</a>. <b>MYC-0114-RH</b> · Revision 2026.08.29.</div>
+<div class="colophon">This document describes a concept protocol for illustration only. It is not a live network, not an offer to sell any token or security, and does not involve wallet connection or deposits. Figures cited above are the output of <code>sim/mycel-sim.js</code> run against real COIN market data - see the <a href="explorer.html" style="color:#fbfaf7">explorer</a> and <a href="verify.html" style="color:#fbfaf7">verify</a> pages. MYCEL is an independent concept project, not affiliated with, endorsed by, or built by Robinhood Markets, Inc.; "Robinhood Chain" is referenced only as the intended deployment target. Source: <a href="https://github.com/mycelrh/mycel" style="color:#fbfaf7">github.com/mycelrh/mycel</a>. <b>MYC-0114-RH</b> · Revision 2026.08.29.</div>
