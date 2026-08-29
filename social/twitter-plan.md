@@ -1,15 +1,15 @@
-# MYCEL - X/Twitter plan (draft, not posted anywhere)
+# MYCEL - X/Twitter plan
 
-Nothing here has been created or posted. This is copy-paste-ready content for whenever an account gets set up.
+The account exists: https://x.com/mycelprotocol. It's linked from the site's nav, colophon, and README. Copy-paste-ready content below for actually populating it.
 
 ## Identity
 
-- **Handle:** `@mycelrh` (matches the GitHub username for consistency - fall back to `@mycel_rh` or `@mycelprotocol` if taken)
+- **Handle:** `@mycelprotocol` (live)
 - **Display name:** `MYCEL`
 - **Location field:** leave blank, or `Concept stage`
-- **Link:** `https://mycelrh.github.io/mycel/`
-- **PFP:** `assets/mycel-avatar.png` - already 512×512, square, reads fine at small sizes
-- **Banner:** `assets/mycel-banner.png` - already 1500×500, exactly X's recommended banner ratio
+- **Link:** `https://mycelprotocol.xyz/` (or `https://mycelrh.github.io/mycel/` until DNS/SSL settle)
+- **PFP:** `assets/mycel-avatar.png` - 512×512, square, reads fine at small sizes
+- **Banner:** `assets/mycel-banner.png` - 1500×500, exactly X's recommended banner ratio
 
 ## Bio (under 160 chars)
 

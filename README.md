@@ -6,6 +6,7 @@ A relay network concept for Robinhood Chain whose topology isn't fixed by config
 **Whitepaper:** https://mycelrh.github.io/mycel/docs.html
 **Explorer:** https://mycelrh.github.io/mycel/explorer.html
 **Verify:** https://mycelrh.github.io/mycel/verify.html
+**X:** https://x.com/mycelprotocol
 
 ## What this actually is
 
