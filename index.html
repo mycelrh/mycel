@@ -1,5 +1,18 @@
+<!DOCTYPE html>
 <meta charset="utf-8">
 <title>MYCEL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A self-growing relay network concept for Robinhood Chain. Connections grow toward real trading demand and prune when it fades. Reference simulation run against real COIN trading data — reproduce it yourself.">
+<link rel="icon" type="image/png" href="assets/mycel-avatar.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mycelrh.github.io/mycel/">
+<meta property="og:title" content="MYCEL">
+<meta property="og:description" content="A self-growing relay network concept for Robinhood Chain. Connections grow toward real trading demand and prune when it fades. Reference simulation run against real COIN trading data.">
+<meta property="og:image" content="https://mycelrh.github.io/mycel/assets/mycel-banner.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MYCEL">
+<meta name="twitter:description" content="A self-growing relay network concept for Robinhood Chain. Reference simulation run against real COIN trading data.">
+<meta name="twitter:image" content="https://mycelrh.github.io/mycel/assets/mycel-banner.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Fraunces:ital,wght@1,300;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap');
 
@@ -243,6 +256,7 @@ figcaption{margin-top:.9rem;font-size:.78rem;color:var(--ink-soft);line-height:1
     <a href="#mesh">Mesh</a>
     <a href="#spec">Spec</a>
     <a href="#evidence">Evidence</a>
+    <a href="#safety">Safety</a>
     <a href="#risk">Risk</a>
     <a href="docs.html">Docs</a>
     <a href="explorer.html">Explorer</a>
@@ -433,6 +447,12 @@ figcaption{margin-top:.9rem;font-size:.78rem;color:var(--ink-soft);line-height:1
     <div class="phead"><span>Reproduce this</span><span class="note">real data, fixed seed, same output every run</span></div>
     <div class="pbody">
       <p style="max-width:68ch;color:var(--ink-soft);line-height:1.6;margin:0 0 1.2rem;font-size:.85rem">Every figure on this page traces back to one script: <code>sim/mycel-sim.js</code>. It implements the six states above exactly as specified, samples demand once per real trading day from <code>sim/coin-daily.csv</code> (COIN daily close/high/low/volume, pulled from Yahoo Finance's public chart API — no key required), and runs on a fixed seed, so anyone who runs it gets this same dated event log back:</p>
+
+      <figure style="margin:0 0 1.4rem">
+        <svg id="chart-svg" viewBox="0 0 900 260" role="img" aria-label="COIN daily trading volume across 251 real trading days, with GROW, REINFORCE, and PRUNE events marked at the routes they triggered." style="width:100%;height:auto;display:block;background:var(--paper-shade)"></svg>
+        <figcaption style="margin-top:.6rem;font-size:.72rem;color:var(--ink-soft)">Real COIN daily volume, Aug 29 2025 – Aug 28 2026. <span style="color:var(--live)">&#9679;</span> grow &nbsp; <span style="color:var(--field-deep)">&#9679;</span> reinforce &nbsp; <span style="color:var(--hot)">&#9679;</span> prune — hover a marker for the exact route and date.</figcaption>
+      </figure>
+
       <table class="seq">
         <thead><tr><th>Date</th><th>Route(s)</th><th>Event</th></tr></thead>
         <tbody>
@@ -449,6 +469,25 @@ figcaption{margin-top:.9rem;font-size:.78rem;color:var(--ink-soft);line-height:1
         <a href="changelog.html">Build changelog</a>
       </div>
     </div>
+  </section>
+
+  <section class="panel" id="safety">
+    <div class="phead"><span>Safety checklist</span><span class="note">checked 2026-08-29 · re-check anytime</span></div>
+    <div class="pbody scrollwrap">
+      <table class="spec">
+        <thead><tr><th>Check</th><th>Result</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Contract deployed</td><td style="color:var(--ink-soft);font-weight:700">NONE</td><td>Nothing exists on any chain yet — there is no address to check, because there is nothing to check.</td></tr>
+          <tr><td>Token sale / presale</td><td style="color:var(--ink-soft);font-weight:700">NONE</td><td>No sale has happened or is planned on this site. Nobody can send this project money through anything here.</td></tr>
+          <tr><td>Wallet connect</td><td style="color:var(--live);font-weight:700">ABSENT</td><td>Every page on this site is static HTML. Open the source — there is no wallet-connect code anywhere to find.</td></tr>
+          <tr><td>Liquidity pool</td><td style="color:var(--ink-soft);font-weight:700">N/A</td><td>No token exists, so there is no liquidity to lock, drain, or lie about.</td></tr>
+          <tr><td>Ownership / mint function</td><td style="color:var(--ink-soft);font-weight:700">N/A</td><td>No contract means no owner key and no mint function to renounce or abuse.</td></tr>
+          <tr><td>Source code</td><td style="color:var(--live);font-weight:700">PUBLIC</td><td>The whole site, the simulation, and the raw market data it runs on: <a href="https://github.com/mycelrh/mycel">github.com/mycelrh/mycel</a>.</td></tr>
+          <tr><td>Figures on this page</td><td style="color:var(--live);font-weight:700">REPRODUCIBLE</td><td>Every number traces to <code>sim/mycel-sim.js</code>. Run it yourself, or check the hashes on <a href="verify.html">verify.html</a>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="fine">This is what "pre-launch concept" actually means here: nothing to buy, nothing to connect, nothing to rug. That will change if this ever becomes a real deployment — this checklist will change with it, and the changelog will say so.</div>
   </section>
 
   <section class="panel" id="risk">
@@ -528,6 +567,46 @@ figcaption{margin-top:.9rem;font-size:.78rem;color:var(--ink-soft);line-height:1
         done('Failed');
       }
     });
+  });
+
+  var EVENT_COLOR = { GROW: 'var(--live)', REINFORCE: 'var(--field-deep)', PRUNE: 'var(--hot)' };
+
+  function parseCsv(text) {
+    return text.trim().split('\n').slice(1).map(function (line) {
+      var cols = line.split(',');
+      return { date: cols[0], close: +cols[1], high: +cols[2], low: +cols[3], volume: +cols[4] };
+    });
+  }
+
+  Promise.all([
+    fetch('sim/coin-daily.csv').then(function (r) { return r.text(); }).then(parseCsv),
+    fetch('sim/fossil-record.json').then(function (r) { return r.json(); }),
+  ]).then(function (results) {
+    var days = results[0], fossil = results[1];
+    var W = 900, H = 260, padL = 10, padR = 10, padT = 12, padB = 12;
+    var maxVol = Math.max.apply(null, days.map(function (d) { return d.volume; }));
+    var x = function (i) { return padL + (i * (W - padL - padR)) / (days.length - 1); };
+    var y = function (v) { return H - padB - (v / maxVol) * (H - padT - padB); };
+
+    var linePts = days.map(function (d, i) { return x(i) + ',' + y(d.volume); }).join(' ');
+    var areaPts = x(0) + ',' + (H - padB) + ' ' + linePts + ' ' + x(days.length - 1) + ',' + (H - padB);
+
+    var markers = '';
+    fossil.forEach(function (day, i) {
+      day.events.forEach(function (ev) {
+        var color = EVENT_COLOR[ev.type] || 'var(--ink)';
+        markers += '<circle cx="' + x(i) + '" cy="' + y(day.volume) + '" r="4.5" fill="' + color + '" stroke="var(--paper)" stroke-width="1.2">' +
+          '<title>' + day.date + ' — ' + ev.edge + ' — ' + ev.type + '</title></circle>';
+      });
+    });
+
+    document.getElementById('chart-svg').innerHTML =
+      '<polygon points="' + areaPts + '" fill="rgba(46,86,200,.12)"/>' +
+      '<polyline points="' + linePts + '" fill="none" stroke="var(--field-deep)" stroke-width="1.3"/>' +
+      markers;
+  }).catch(function (err) {
+    var svg = document.getElementById('chart-svg');
+    if (svg) svg.outerHTML = '<div class="fine" style="border:var(--bar) solid var(--ink)">Could not load the chart data (' + err.message + '). If you opened this file directly, serve the folder over http instead — e.g. <code>python3 -m http.server</code>.</div>';
   });
 })();
 </script>
