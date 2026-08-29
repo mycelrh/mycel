@@ -1,0 +1,36 @@
+{
+  "generatedAt": "2026-08-29T20:44:32.386Z",
+  "seed": 1297695537,
+  "params": {
+    "TICKS_PER_DAY": 200,
+    "GROW_TICKS": 3,
+    "REINFORCE_TICKS": 500,
+    "PRUNE_TICKS": 5000,
+    "ELEVATED_Z": 1,
+    "ROLLING_WINDOW": 20
+  },
+  "dataRange": {
+    "from": "2025-08-29",
+    "to": "2026-08-28",
+    "tradingDays": 251
+  },
+  "liveConnections": 16,
+  "baselineConnections": 12,
+  "candidateEdges": 4,
+  "finalAliveShortcuts": [
+    "R1-COIN",
+    "R2-COIN",
+    "R5-COIN",
+    "COIN-CHAIN"
+  ],
+  "totalGrowEvents": 6,
+  "totalReinforceEvents": 4,
+  "totalPruneEvents": 2,
+  "firstGrowEvent": {
+    "day": 20,
+    "date": "2025-09-29",
+    "edge": "R1-COIN",
+    "type": "GROW"
+  },
+  "daysSinceFirstGrow": 230
+}

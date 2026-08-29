@@ -1,0 +1,247 @@
+<meta charset="utf-8">
+<title>MYCEL — Docs</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Fraunces:ital,wght@1,300;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --field:#2e56c8;
+  --field-deep:#1a3aa0;
+  --paper:#fbfaf7;
+  --paper-shade:#eeece4;
+  --ink:#0c1024;
+  --ink-soft:#4a5270;
+  --hot:#e4572e;
+  --live:#127c34;
+  --bar:1.5px;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background-color:var(--field);
+  background-image:
+    linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
+  background-size:34px 34px;
+  color:var(--ink);
+  font-family:'Spline Sans Mono',ui-monospace,monospace;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+code{background:var(--paper-shade);padding:.05em .35em;font-size:.92em}
+*:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+
+.statusbar{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;gap:1.5rem;
+  background:var(--ink);color:var(--paper);
+  padding:.6rem 1.1rem;
+  border-bottom:var(--bar) solid var(--ink);
+  font-size:.72rem;letter-spacing:.05em;
+  overflow-x:auto;white-space:nowrap;
+}
+.statusbar .word{font-family:Archivo;font-weight:900;letter-spacing:.02em;font-size:.9rem;text-transform:uppercase;text-decoration:none}
+.statusbar .doc{color:#9aa6d6}
+.statusbar nav{display:flex;gap:1.1rem;margin-left:auto}
+.statusbar nav a{text-decoration:none;text-transform:uppercase;letter-spacing:.12em;font-size:.68rem;opacity:.85}
+.statusbar nav a:hover{opacity:1;color:var(--hot)}
+
+.layout{max-width:1320px;margin:0 auto;padding:2.2rem 1.2rem 4rem;display:grid;grid-template-columns:220px 1fr;gap:2rem}
+@media (max-width:900px){ .layout{grid-template-columns:1fr} }
+
+.toc{position:sticky;top:3.4rem;align-self:start;background:var(--paper);border:var(--bar) solid var(--ink)}
+.toc .phead{background:var(--ink);color:var(--paper);padding:.5rem .8rem;font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.16em;font-size:.62rem}
+.toc ol{list-style:none;margin:0;padding:.6rem .9rem;counter-reset:toc}
+.toc li{counter-increment:toc;margin-bottom:.55rem;font-size:.72rem;line-height:1.4}
+.toc a{text-decoration:none;color:var(--ink-soft)}
+.toc a:hover{color:var(--hot)}
+.toc li::before{content:counter(toc,decimal-leading-zero) " ";color:var(--hot);font-weight:700;font-family:Archivo}
+@media (max-width:900px){ .toc{position:static} }
+
+.doc{background:var(--paper);border:var(--bar) solid var(--ink)}
+.doc-head{padding:1.8rem 1.6rem 1.4rem;border-bottom:var(--bar) solid var(--ink)}
+.doc-head .eyebrow{font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.2em;font-size:.68rem;color:var(--hot);margin:0 0 .6rem}
+.doc-head h1{margin:0;font-family:Archivo;font-weight:900;text-transform:uppercase;font-size:clamp(1.7rem,4vw,2.5rem);letter-spacing:-.02em;line-height:1.02}
+.doc-head h1 i{display:block;font-family:Fraunces;font-style:italic;font-weight:300;text-transform:lowercase;color:var(--field-deep);font-size:clamp(1.5rem,3.4vw,2.1rem);margin-top:.1rem}
+.doc-head .meta{margin-top:.9rem;display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;font-size:.72rem;color:var(--ink-soft)}
+.doc-head .meta b{color:var(--ink);font-family:'Spline Sans Mono'}
+
+section.clause{padding:1.6rem;border-bottom:var(--bar) solid var(--ink)}
+section.clause:last-of-type{border-bottom:0}
+section.clause h2{
+  font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.02em;
+  font-size:1.15rem;margin:0 0 .3rem;display:flex;gap:.6rem;align-items:baseline;
+}
+section.clause h2 span.no{color:var(--hot);font-size:.85rem}
+section.clause h2 i{font-family:Fraunces;font-style:italic;font-weight:300;text-transform:lowercase;color:var(--field-deep);font-size:1.1rem}
+section.clause p{max-width:68ch;line-height:1.65;color:var(--ink-soft);font-size:.92rem}
+section.clause p + p{margin-top:.9rem}
+section.clause strong{color:var(--ink)}
+
+table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:1rem}
+th{text-align:left;font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:.62rem;background:var(--paper-shade);padding:.6rem .75rem;border-bottom:var(--bar) solid var(--ink)}
+td{padding:.65rem .75rem;border-bottom:1px solid rgba(12,16,36,.14);color:var(--ink-soft);vertical-align:top}
+td:first-child{font-family:Archivo;font-weight:800;color:var(--ink);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.scrollwrap{overflow-x:auto}
+.flags thead th{background:var(--hot);color:var(--paper)}
+.flags .mk{color:var(--hot)}
+
+.phasegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:var(--bar) solid var(--ink);margin-top:1rem}
+@media (max-width:700px){ .phasegrid{grid-template-columns:repeat(2,1fr)} }
+.phase{padding:.9rem;border-right:1px solid rgba(12,16,36,.16);border-bottom:1px solid rgba(12,16,36,.16)}
+.phase .tag{font-family:Archivo;font-weight:800;font-size:.65rem;text-transform:uppercase;letter-spacing:.1em}
+.phase .tag.now{color:var(--hot)}
+.phase .tag.done{color:var(--live)}
+.phase p{margin:.4rem 0 0;font-size:.76rem;color:var(--ink-soft);line-height:1.5}
+
+dl.gloss{margin:1rem 0 0;display:grid;grid-template-columns:max-content 1fr;gap:.5rem 1.2rem}
+dl.gloss dt{font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-size:.78rem;white-space:nowrap}
+dl.gloss dd{margin:0;font-size:.85rem;color:var(--ink-soft);line-height:1.5}
+
+.colophon{background:var(--ink);color:var(--paper);padding:1.4rem 1.6rem;font-size:.72rem;line-height:1.6;color:#9aa6d6}
+.colophon b{color:var(--paper)}
+</style>
+
+<div class="statusbar">
+  <a class="word" href="index.html">Mycel</a>
+  <span class="doc">SPEC NO. MYC-0114-RH · DOCS</span>
+  <nav>
+    <a href="index.html">Overview</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="#token">Token</a>
+    <a href="#risk">Risk</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="explorer.html">Explorer</a>
+    <a href="changelog.html">Changelog</a>
+    <a href="verify.html">Verify</a>
+  </nav>
+</div>
+
+<div class="layout">
+
+  <nav class="toc" aria-label="Table of contents">
+    <div class="phead">Contents</div>
+    <ol>
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#problem">The problem</a></li>
+      <li><a href="#mechanism">The mechanism</a></li>
+      <li><a href="#route">Genesis route</a></li>
+      <li><a href="#token">$MYC token</a></li>
+      <li><a href="#risk">Risk disclosure</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+      <li><a href="#glossary">Glossary</a></li>
+    </ol>
+  </nav>
+
+  <article class="doc">
+    <div class="doc-head">
+      <p class="eyebrow">Whitepaper · Revision 2026.08.29</p>
+      <h1>A network that reshapes itself<i>instead of one anyone has to reconfigure.</i></h1>
+      <div class="meta">
+        <span><b>Chain</b> Robinhood Chain · L2</span>
+        <span><b>Token</b> $MYC</span>
+        <span><b>Status</b> Concept · reference sim</span>
+        <span><b>Spec ID</b> MYC-0114-RH</span>
+      </div>
+    </div>
+
+    <section class="clause" id="abstract">
+      <h2><span class="no">01</span> Abstract</h2>
+      <p><strong>Mycel</strong> is a relay network for Robinhood Chain whose topology is not fixed by configuration. Relays continuously measure real transaction demand passing through their neighbors and grow new direct connections toward routes that are genuinely busy, the way mycelium extends toward a nutrient source rather than following a map someone drew in advance.</p>
+      <p>Connections that stay fast and useful are reinforced automatically. Connections that go quiet are pruned. The exact shape of the mesh at every block height is recorded permanently, so the network's growth is auditable history, not a black box.</p>
+    </section>
+
+    <section class="clause" id="problem">
+      <h2><span class="no">02</span> The problem with wiring a network once</h2>
+      <p>Most relay networks are topology-first: someone decides which nodes talk to which, ships that configuration, and only revisits it during an incident. That works until demand moves somewhere the configuration didn't anticipate — a new asset gets popular, a region spikes, a route that used to be quiet becomes the busiest path on the network. Someone has to notice, then someone has to redeploy.</p>
+      <p>On a chain built for 24-hour markets, that lag is the problem. A route needs to be able to widen itself between one block and the next, and narrow back down just as automatically once the moment passes.</p>
+    </section>
+
+    <section class="clause" id="mechanism">
+      <h2><span class="no">03</span> The mechanism <i>— six states, one loop</i></h2>
+      <p>Every relay runs the same loop. There is no central scheduler and no config file to edit — the states below are the whole protocol.</p>
+      <table>
+        <thead><tr><th>State</th><th>Condition</th><th>Effect</th></tr></thead>
+        <tbody>
+          <tr><td>Sense</td><td>Continuous, every block</td><td>Each relay reads real traffic through its neighbors.</td></tr>
+          <tr><td>Grow</td><td>Sustained demand, 3+ consecutive blocks</td><td>A direct connection forms toward the busy route.</td></tr>
+          <tr><td>Reinforce</td><td>Fast, low-latency traffic for 500+ blocks</td><td>Bandwidth and stake weight increase on that connection.</td></tr>
+          <tr><td>Prune</td><td>No traffic for 5,000 consecutive blocks</td><td>The connection is retired; capacity is freed.</td></tr>
+          <tr><td>Reroute</td><td>A live connection is cut</td><td>Traffic finds the next-strongest surviving path within one block.</td></tr>
+          <tr><td>Fossilize</td><td>Every block, automatically</td><td>The mesh's exact shape is written to permanent history.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="clause" id="route">
+      <h2><span class="no">04</span> Genesis route <i>— MYC / COIN·USD</i></h2>
+      <p>Mycel's first demonstration route connects its relay mesh to the tokenized <strong>COIN·USD</strong> pair on Robinhood Chain. Coinbase-linked demand tends to move in sharp bursts — it climbs hard whenever crypto markets move — which makes it a clear, visible test of whether the mesh actually grows and prunes the way the mechanism describes, rather than a synthetic benchmark.</p>
+      <p>No network is deployed yet, so this route is exercised by <code>sim/mycel-sim.js</code>: a deterministic implementation of the six states, run against 251 real trading days of COIN daily volume (Aug 29 2025 – Aug 28 2026, from Yahoo Finance's public chart API). On a fixed seed, it reproduces this exact dated event log every time:</p>
+      <table>
+        <thead><tr><th>Date</th><th>Route(s)</th><th>Event</th></tr></thead>
+        <tbody>
+          <tr><td>2025-09-29</td><td>R1-COIN, R2-COIN, R5-COIN, COIN-CHAIN</td><td>GROW</td></tr>
+          <tr><td>2025-12-29</td><td>R1-COIN</td><td>PRUNE</td></tr>
+          <tr><td>2025-12-30</td><td>R5-COIN</td><td>PRUNE</td></tr>
+          <tr><td>2026-01-05</td><td>R1-COIN, R5-COIN</td><td>GROW (regrown)</td></tr>
+          <tr><td>2026-02-04</td><td>R1-COIN, R2-COIN, R5-COIN, COIN-CHAIN</td><td>REINFORCE</td></tr>
+        </tbody>
+      </table>
+      <p>Reproduce it yourself: <code>node sim/mycel-sim.js</code>. Full daily-resolution output: <a href="explorer.html">the explorer</a>. See <a href="index.html#mesh">the live mesh view</a> for the growth states side by side.</p>
+    </section>
+
+    <section class="clause" id="token">
+      <h2><span class="no">05</span> $MYC token</h2>
+      <p>$MYC has three jobs on the network:</p>
+      <table>
+        <thead><tr><th>Use</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>Relay bonding</td><td>Anyone running a relay posts $MYC as a bond. A relay that reports bad demand signals or fails to route honestly can have its bond slashed.</td></tr>
+          <tr><td>Growth incentive</td><td>Relays that grow connections which get reinforced (proven genuinely useful, not just busy briefly) earn $MYC from the growth incentive pool.</td></tr>
+          <tr><td>Threshold governance</td><td>The block-count thresholds in the mechanism above — 3 blocks to grow, 500 to reinforce, 5,000 to prune — are protocol parameters $MYC holders can vote to adjust as real traffic patterns emerge.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="clause" id="risk">
+      <h2><span class="no">06</span> Risk disclosure</h2>
+      <p>These are the failure modes we can name today. This is a working list, not a complete one.</p>
+      <div class="scrollwrap">
+        <table class="flags">
+          <thead><tr><th>Mark</th><th>Failure mode</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td class="mk">F1</td><td>Growth storm</td><td>A sudden, legitimate demand spike can trigger many connections to grow at once, briefly outpacing verification capacity.</td></tr>
+            <tr><td class="mk">F2</td><td>Starved region</td><td>A region with too little baseline traffic may never accumulate enough demand to grow proper connections on its own, and can require manual seeding.</td></tr>
+            <tr><td class="mk">F3</td><td>Fossil bloat</td><td>Recording the mesh's exact shape every block grows the permanent history faster than transaction data alone would.</td></tr>
+            <tr><td class="mk">F4</td><td>Reinforcement loop</td><td>A popular route can attract so much reinforcement that it starves a quieter route still genuinely needed.</td></tr>
+            <tr><td class="mk">F5</td><td>Cold start</td><td>A brand-new deployment has no historical traffic pattern, so its earliest growth decisions are noisier until enough blocks accumulate.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="clause" id="roadmap">
+      <h2><span class="no">07</span> Roadmap</h2>
+      <div class="phasegrid">
+        <div class="phase"><span class="tag done">Phase 0 — done</span><p>Mechanism design. Reference simulation (<code>sim/mycel-sim.js</code>) built and run against a year of real COIN trading data.</p></div>
+        <div class="phase"><span class="tag now">Phase 1 — now</span><p>Concept site published: whitepaper, reproducible simulation, explorer and verify pages. No deployed network yet.</p></div>
+        <div class="phase"><span class="tag">Phase 2</span><p>First real testnet. Open relay client and bonding. Second and third demonstration routes.</p></div>
+        <div class="phase"><span class="tag">Phase 3</span><p>Independent audit of the slashing and threshold-governance logic before any mainnet candidate.</p></div>
+      </div>
+    </section>
+
+    <section class="clause" id="glossary">
+      <h2><span class="no">08</span> Glossary</h2>
+      <dl class="gloss">
+        <dt>Relay</dt><dd>A node that routes traffic between other relays and Robinhood Chain, and senses demand as it does.</dd>
+        <dt>Route</dt><dd>A connection between two relays, or between a relay and a chain endpoint.</dd>
+        <dt>Genesis route</dt><dd>The first live route the network was deployed to demonstrate — currently MYC/COIN·USD.</dd>
+        <dt>Fossil record</dt><dd>The permanent, block-by-block history of the mesh's shape.</dd>
+        <dt>Threshold</dt><dd>A block-count trigger (grow, reinforce, prune) governed by $MYC holders.</dd>
+      </dl>
+    </section>
+  </article>
+</div>
+
+<div class="colophon">This document describes a concept protocol for illustration only. It is not a live network, not an offer to sell any token or security, and does not involve wallet connection or deposits. Figures cited above are the output of <code>sim/mycel-sim.js</code> run against real COIN market data — see the <a href="explorer.html" style="color:#fbfaf7">explorer</a> and <a href="verify.html" style="color:#fbfaf7">verify</a> pages. MYCEL is an independent concept project, not affiliated with, endorsed by, or built by Robinhood Markets, Inc.; "Robinhood Chain" is referenced only as the intended deployment target. <b>MYC-0114-RH</b> · Revision 2026.08.29.</div>

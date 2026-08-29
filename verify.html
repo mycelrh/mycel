@@ -1,0 +1,199 @@
+<meta charset="utf-8">
+<title>MYCEL — Verify</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Fraunces:ital,wght@1,300;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --field:#2e56c8;
+  --field-deep:#1a3aa0;
+  --paper:#fbfaf7;
+  --paper-shade:#eeece4;
+  --ink:#0c1024;
+  --ink-soft:#4a5270;
+  --hot:#e4572e;
+  --live:#127c34;
+  --bar:1.5px;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background-color:var(--field);
+  background-image:
+    linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
+  background-size:34px 34px;
+  color:var(--ink);
+  font-family:'Spline Sans Mono',ui-monospace,monospace;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+code{background:var(--paper-shade);padding:.05em .35em;font-size:.92em}
+*:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+
+.statusbar{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;gap:1.5rem;
+  background:var(--ink);color:var(--paper);
+  padding:.6rem 1.1rem;
+  border-bottom:var(--bar) solid var(--ink);
+  font-size:.72rem;letter-spacing:.05em;
+  overflow-x:auto;white-space:nowrap;
+}
+.statusbar .word{font-family:Archivo;font-weight:900;letter-spacing:.02em;font-size:.9rem;text-transform:uppercase;text-decoration:none}
+.statusbar .doc{color:#9aa6d6}
+.statusbar nav{display:flex;gap:1.1rem;margin-left:auto}
+.statusbar nav a{text-decoration:none;text-transform:uppercase;letter-spacing:.12em;font-size:.68rem;opacity:.85}
+.statusbar nav a:hover{opacity:1;color:var(--hot)}
+
+main{max-width:1040px;margin:0 auto;padding:2.2rem 1.2rem 4rem}
+
+.panel{background:var(--paper);border:var(--bar) solid var(--ink)}
+.panel + .panel{margin-top:1.6rem}
+.phead{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  background:var(--ink);color:var(--paper);
+  padding:.55rem 1rem;
+  font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.2em;font-size:.72rem;
+}
+.phead .note{color:#9aa6d6;letter-spacing:.05em;font-family:'Spline Sans Mono';text-transform:none;font-weight:500}
+.pbody{padding:1.4rem}
+.eyebrow{font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.2em;font-size:.68rem;color:var(--hot);margin:0 0 .6rem}
+h1{font-family:Archivo;font-weight:900;text-transform:uppercase;font-size:clamp(1.6rem,4vw,2.2rem);letter-spacing:-.02em;margin:0 0 .5rem}
+h1 i{display:block;font-family:Fraunces;font-style:italic;font-weight:300;text-transform:lowercase;color:var(--field-deep);font-size:clamp(1.3rem,3vw,1.6rem);margin-top:.1rem}
+.lede{max-width:70ch;color:var(--ink-soft);line-height:1.6;font-size:.88rem;margin:0 0 .5rem}
+
+table{width:100%;border-collapse:collapse;font-size:.78rem}
+thead th{text-align:left;font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:.62rem;background:var(--paper-shade);padding:.55rem .7rem;border-bottom:var(--bar) solid var(--ink)}
+tbody td{padding:.6rem .7rem;border-bottom:1px solid rgba(12,16,36,.14);vertical-align:middle}
+tbody td.file{font-family:Archivo;font-weight:700;white-space:nowrap}
+tbody td.hash{font-size:.72rem;word-break:break-all;color:var(--ink-soft)}
+tbody tr:last-child td{border-bottom:0}
+
+.checkbtn{
+  background:var(--ink);color:var(--paper);border:none;font-family:Archivo;font-weight:800;
+  text-transform:uppercase;letter-spacing:.08em;font-size:.62rem;padding:.4rem .7rem;cursor:pointer;white-space:nowrap;
+}
+.checkbtn:hover{background:var(--field-deep)}
+.status{font-family:Archivo;font-weight:800;text-transform:uppercase;font-size:.68rem;letter-spacing:.04em}
+.status.pending{color:var(--ink-soft)}
+.status.match{color:var(--live)}
+.status.mismatch{color:var(--hot)}
+.status.error{color:var(--hot)}
+
+.strip{display:flex;border:var(--bar) solid var(--ink);margin-top:1.2rem}
+.strip button{
+  flex:1;background:var(--paper);border:0;border-right:var(--bar) solid var(--ink);cursor:pointer;
+  font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:.72rem;padding:.7rem;
+}
+.strip button:last-child{border-right:0}
+.strip button:hover{background:var(--ink);color:var(--paper)}
+
+.howto{font-size:.8rem;line-height:1.7;color:var(--ink-soft)}
+.howto code{display:block;margin:.4rem 0;padding:.5rem .7rem;background:var(--ink);color:var(--paper);font-size:.76rem;overflow-x:auto}
+</style>
+
+<div class="statusbar">
+  <a class="word" href="index.html">Mycel</a>
+  <span class="doc">SPEC NO. MYC-0114-RH · VERIFY</span>
+  <nav>
+    <a href="index.html">Overview</a>
+    <a href="docs.html">Docs</a>
+    <a href="explorer.html">Explorer</a>
+    <a href="changelog.html">Changelog</a>
+  </nav>
+</div>
+
+<main>
+  <section class="panel">
+    <div class="pbody">
+      <p class="eyebrow">Verify</p>
+      <h1>Don't trust the page<i>check the bytes yourself.</i></h1>
+      <p class="lede">Each row below pins a SHA-256 hash of a real file in this project, computed when this page was last published. Press <strong>Check now</strong> and your browser will re-fetch that exact file and hash it locally with <code>crypto.subtle.digest</code> — nothing is sent anywhere. If the page has been edited since, the hash won't match, and you'll see it fail here rather than take our word for it.</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="phead"><span>Pinned hashes</span><span class="note">SHA-256, computed 2026-08-29</span></div>
+    <div class="pbody" style="padding:0">
+      <table>
+        <thead><tr><th>File</th><th>Pinned SHA-256</th><th>Status</th><th></th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <div style="padding:0 1.4rem 1.4rem">
+      <div class="strip"><button id="check-all">Check all now</button></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="phead"><span>Verify offline instead</span><span class="note">no browser required</span></div>
+    <div class="pbody howto">
+      <p>Don't want to trust this page's JavaScript either? Compute the hash yourself from a terminal, in the project folder, and compare it to the pinned value above by eye:</p>
+      <code>certutil -hashfile index.html SHA256          &lt;- Windows</code>
+      <code>shasum -a 256 index.html                       &lt;- macOS / Linux</code>
+      <p>Swap in <code>docs.html</code>, <code>sim/mycel-sim.js</code>, <code>sim/coin-daily.csv</code>, or <code>sim/summary.json</code> for any other row.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+const FILES = [
+  { name: 'index.html', hash: '151d90f2de9251a6052bbb15330639fc444ea776dcb42750073ec9e7ca2fa9dd' },
+  { name: 'docs.html', hash: '208ab24ae1438faddbd0fef4e6435c320c4f24d937933554f591c9587179e0aa' },
+  { name: 'sim/mycel-sim.js', hash: '5e2ae5436c10678d22458aeb3c546cec56d5e66cdcabac72765459d2148ba0c3' },
+  { name: 'sim/coin-daily.csv', hash: 'f3acf98af53f20e9c23af583b6f940d845c4eb78b299df639cbdf4cb56b2cb52' },
+  { name: 'sim/summary.json', hash: '435f31f541f6726eb01cbbb95a2768eaca51922682e0087dae97a7db27de4d9f' },
+];
+
+async function sha256(buf) {
+  const digest = await crypto.subtle.digest('SHA-256', buf);
+  return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+function render() {
+  document.getElementById('rows').innerHTML = FILES.map((f, i) => `
+    <tr data-i="${i}">
+      <td class="file">${f.name}</td>
+      <td class="hash">${f.hash}</td>
+      <td class="status pending" id="status-${i}">not checked</td>
+      <td><button class="checkbtn" data-i="${i}">Check now</button></td>
+    </tr>
+  `).join('');
+}
+
+async function check(i) {
+  const f = FILES[i];
+  const statusEl = document.getElementById(`status-${i}`);
+  statusEl.textContent = 'checking…';
+  statusEl.className = 'status pending';
+  try {
+    const buf = await fetch(f.name, { cache: 'no-store' }).then((r) => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.arrayBuffer();
+    });
+    const actual = await sha256(buf);
+    if (actual === f.hash) {
+      statusEl.textContent = 'match';
+      statusEl.className = 'status match';
+    } else {
+      statusEl.textContent = 'changed since publish';
+      statusEl.className = 'status mismatch';
+      statusEl.title = `computed: ${actual}`;
+    }
+  } catch (err) {
+    statusEl.textContent = 'could not fetch';
+    statusEl.className = 'status error';
+    statusEl.title = err.message + ' — if opened via file://, serve the folder over http instead';
+  }
+}
+
+render();
+document.getElementById('rows').addEventListener('click', (e) => {
+  const btn = e.target.closest('.checkbtn');
+  if (btn) check(+btn.dataset.i);
+});
+document.getElementById('check-all').addEventListener('click', () => {
+  FILES.forEach((_, i) => check(i));
+});
+</script>

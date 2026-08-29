@@ -1,0 +1,214 @@
+<meta charset="utf-8">
+<title>MYCEL — Explorer</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Fraunces:ital,wght@1,300;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --field:#2e56c8;
+  --field-deep:#1a3aa0;
+  --paper:#fbfaf7;
+  --paper-shade:#eeece4;
+  --ink:#0c1024;
+  --ink-soft:#4a5270;
+  --hot:#e4572e;
+  --live:#127c34;
+  --bar:1.5px;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background-color:var(--field);
+  background-image:
+    linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
+  background-size:34px 34px;
+  color:var(--ink);
+  font-family:'Spline Sans Mono',ui-monospace,monospace;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+code{background:var(--paper-shade);padding:.05em .35em;font-size:.92em}
+*:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+
+.statusbar{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;gap:1.5rem;
+  background:var(--ink);color:var(--paper);
+  padding:.6rem 1.1rem;
+  border-bottom:var(--bar) solid var(--ink);
+  font-size:.72rem;letter-spacing:.05em;
+  overflow-x:auto;white-space:nowrap;
+}
+.statusbar .word{font-family:Archivo;font-weight:900;letter-spacing:.02em;font-size:.9rem;text-transform:uppercase;text-decoration:none}
+.statusbar .doc{color:#9aa6d6}
+.statusbar nav{display:flex;gap:1.1rem;margin-left:auto}
+.statusbar nav a{text-decoration:none;text-transform:uppercase;letter-spacing:.12em;font-size:.68rem;opacity:.85}
+.statusbar nav a:hover{opacity:1;color:var(--hot)}
+
+main{max-width:1320px;margin:0 auto;padding:2.2rem 1.2rem 4rem}
+
+.panel{background:var(--paper);border:var(--bar) solid var(--ink)}
+.panel + .panel{margin-top:2.2rem}
+.phead{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  background:var(--ink);color:var(--paper);
+  padding:.55rem 1rem;
+  font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.2em;font-size:.72rem;
+}
+.phead .note{color:#9aa6d6;letter-spacing:.05em;font-family:'Spline Sans Mono';text-transform:none;font-weight:500}
+.pbody{padding:1.4rem}
+
+h1{font-family:Archivo;font-weight:900;text-transform:uppercase;font-size:clamp(1.6rem,4vw,2.3rem);letter-spacing:-.02em;margin:0 0 .5rem}
+h1 i{display:block;font-family:Fraunces;font-style:italic;font-weight:300;text-transform:lowercase;color:var(--field-deep);font-size:clamp(1.3rem,3vw,1.7rem);margin-top:.1rem}
+.eyebrow{font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.2em;font-size:.68rem;color:var(--hot);margin:0 0 .6rem}
+.lede{max-width:70ch;color:var(--ink-soft);line-height:1.6;font-size:.88rem;margin:0}
+
+.grid4{display:grid;grid-template-columns:repeat(4,1fr)}
+@media (max-width:800px){ .grid4{grid-template-columns:repeat(2,1fr)} }
+.cell{padding:1.1rem;border-right:1px solid rgba(12,16,36,.16);border-bottom:1px solid rgba(12,16,36,.16)}
+.grid4 .cell:nth-child(4n){border-right:0}
+.cell .num{font-family:Archivo;font-weight:900;font-size:1.7rem;font-variant-numeric:tabular-nums}
+.cell .lbl{margin-top:.3rem;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+
+.legend{display:flex;flex-wrap:wrap;gap:1rem;padding:.9rem 1.4rem;border-top:1px solid rgba(12,16,36,.14);font-size:.72rem;color:var(--ink-soft)}
+.legend b{padding:.05em .4em;font-family:Archivo;font-weight:800;font-size:.65rem}
+.tag-grow{background:var(--live);color:var(--paper)}
+.tag-reinforce{background:var(--field-deep);color:var(--paper)}
+.tag-prune{background:var(--hot);color:var(--paper)}
+.tag-elevated{background:var(--paper-shade);color:var(--ink)}
+
+.tablewrap{max-height:70vh;overflow:auto;border-top:var(--bar) solid var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:.78rem}
+thead th{
+  position:sticky;top:0;z-index:2;
+  text-align:left;font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.08em;
+  font-size:.6rem;background:var(--ink);color:var(--paper);padding:.5rem .7rem;
+}
+tbody td{padding:.4rem .7rem;border-bottom:1px solid rgba(12,16,36,.1);color:var(--ink-soft);white-space:nowrap}
+tbody td.date{color:var(--ink);font-weight:600}
+tbody tr.has-event{background:#eef1fb}
+tbody tr:hover{background:var(--paper-shade)}
+.badge{display:inline-block;padding:.05em .4em;font-family:Archivo;font-weight:800;font-size:.6rem;margin-right:.2rem;letter-spacing:.03em}
+.dot{display:inline-block;width:7px;height:7px;margin-right:.4em}
+.dot.on{background:var(--field-deep)}
+.dot.off{background:rgba(12,16,36,.15)}
+
+.skiplist{display:flex;flex-wrap:wrap;gap:.6rem;padding:1rem 1.4rem;border-top:1px solid rgba(12,16,36,.14)}
+.skiplist a{
+  font-size:.72rem;text-decoration:none;border:1px solid var(--ink);padding:.3rem .6rem;color:var(--ink);
+}
+.skiplist a:hover{background:var(--ink);color:var(--paper)}
+
+.loading, .error{padding:2rem 1.4rem;color:var(--ink-soft);font-size:.85rem}
+.error{color:var(--hot)}
+</style>
+
+<div class="statusbar">
+  <a class="word" href="index.html">Mycel</a>
+  <span class="doc">SPEC NO. MYC-0114-RH · EXPLORER</span>
+  <nav>
+    <a href="index.html">Overview</a>
+    <a href="docs.html">Docs</a>
+    <a href="changelog.html">Changelog</a>
+    <a href="verify.html">Verify</a>
+  </nav>
+</div>
+
+<main>
+  <section class="panel">
+    <div class="pbody">
+      <p class="eyebrow">Explorer</p>
+      <h1>Every day, exactly as the simulation produced it<i>no rows hidden, no rows invented.</i></h1>
+      <p class="lede">This table is <code>sim/fossil-record.json</code> rendered directly in your browser — the same file <code>sim/mycel-sim.js</code> writes to disk when you run it. 251 real trading days, in order, with the mesh's exact state after each one.</p>
+    </div>
+    <div id="summary-grid" class="grid4"><div class="cell"><div class="num">…</div><div class="lbl">loading summary.json</div></div></div>
+    <div class="legend">
+      <span><b class="tag-grow">GROW</b> route formed</span>
+      <span><b class="tag-reinforce">REINFORCE</b> route earned more stake weight</span>
+      <span><b class="tag-prune">PRUNE</b> route retired</span>
+      <span><span class="dot on"></span>alive route <span class="dot off"></span>dormant route</span>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="phead"><span>Daily record</span><span class="note" id="row-count">—</span></div>
+    <div id="jump" class="skiplist"></div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Day</th><th>Date</th><th>Volume</th><th>Demand</th>
+            <th>R1</th><th>R2</th><th>R5</th><th>CHAIN</th>
+            <th>Events</th>
+          </tr>
+        </thead>
+        <tbody id="rows">
+          <tr><td colspan="9" class="loading">Loading fossil-record.json…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script>
+const EDGE_COLS = ['R1-COIN', 'R2-COIN', 'R5-COIN', 'COIN-CHAIN'];
+
+function fmtVol(v) {
+  return (v / 1e6).toFixed(1) + 'M';
+}
+
+function dotFor(alive) {
+  return `<span class="dot ${alive ? 'on' : 'off'}" title="${alive ? 'alive' : 'dormant'}"></span>`;
+}
+
+function badgeFor(ev) {
+  const cls = ev.type === 'GROW' ? 'tag-grow' : ev.type === 'REINFORCE' ? 'tag-reinforce' : 'tag-prune';
+  return `<span class="badge ${cls}">${ev.type}</span>${ev.edge}`;
+}
+
+async function main() {
+  let summary, fossil;
+  try {
+    [summary, fossil] = await Promise.all([
+      fetch('sim/summary.json').then((r) => r.json()),
+      fetch('sim/fossil-record.json').then((r) => r.json()),
+    ]);
+  } catch (err) {
+    document.getElementById('rows').innerHTML =
+      `<tr><td colspan="9" class="error">Could not load sim/summary.json or sim/fossil-record.json (${err.message}). If you opened this file directly (file://), browsers block local fetch() by same-origin rules — serve the folder instead, e.g. <code>python3 -m http.server</code> from the project root, then open http://localhost:8000/explorer.html.</td></tr>`;
+    return;
+  }
+
+  document.getElementById('summary-grid').innerHTML = `
+    <div class="cell"><div class="num">${summary.dataRange.tradingDays}</div><div class="lbl">Real trading days simulated</div></div>
+    <div class="cell"><div class="num">${summary.totalGrowEvents}</div><div class="lbl">Grow events</div></div>
+    <div class="cell"><div class="num">${summary.totalReinforceEvents}</div><div class="lbl">Reinforce events</div></div>
+    <div class="cell"><div class="num">${summary.totalPruneEvents}</div><div class="lbl">Prune events</div></div>
+  `;
+
+  document.getElementById('row-count').textContent = `${fossil.length} days · seed ${summary.seed}`;
+
+  const eventDays = fossil.filter((d) => d.events.length > 0);
+  document.getElementById('jump').innerHTML = eventDays
+    .map((d) => `<a href="#day-${d.day}">${d.date}</a>`)
+    .join('');
+
+  const rows = fossil.map((d) => {
+    const cells = EDGE_COLS.map((e) => dotFor(d.aliveEdges.includes(e))).join('');
+    const events = d.events.length ? d.events.map(badgeFor).join(' ') : '—';
+    return `<tr id="day-${d.day}" class="${d.events.length ? 'has-event' : ''}">
+      <td>${d.day}</td>
+      <td class="date">${d.date}</td>
+      <td>${fmtVol(d.volume)}</td>
+      <td>${d.elevated ? '<span class="badge tag-elevated">ELEVATED</span>' : 'quiet'}</td>
+      ${cells}
+      <td>${events}</td>
+    </tr>`;
+  });
+
+  document.getElementById('rows').innerHTML = rows.join('');
+}
+
+main();
+</script>

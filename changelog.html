@@ -1,0 +1,151 @@
+<meta charset="utf-8">
+<title>MYCEL — Changelog</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Fraunces:ital,wght@1,300;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --field:#2e56c8;
+  --field-deep:#1a3aa0;
+  --paper:#fbfaf7;
+  --paper-shade:#eeece4;
+  --ink:#0c1024;
+  --ink-soft:#4a5270;
+  --hot:#e4572e;
+  --live:#127c34;
+  --bar:1.5px;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background-color:var(--field);
+  background-image:
+    linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
+  background-size:34px 34px;
+  color:var(--ink);
+  font-family:'Spline Sans Mono',ui-monospace,monospace;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+code{background:var(--paper-shade);padding:.05em .35em;font-size:.92em}
+*:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+
+.statusbar{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;gap:1.5rem;
+  background:var(--ink);color:var(--paper);
+  padding:.6rem 1.1rem;
+  border-bottom:var(--bar) solid var(--ink);
+  font-size:.72rem;letter-spacing:.05em;
+  overflow-x:auto;white-space:nowrap;
+}
+.statusbar .word{font-family:Archivo;font-weight:900;letter-spacing:.02em;font-size:.9rem;text-transform:uppercase;text-decoration:none}
+.statusbar .doc{color:#9aa6d6}
+.statusbar nav{display:flex;gap:1.1rem;margin-left:auto}
+.statusbar nav a{text-decoration:none;text-transform:uppercase;letter-spacing:.12em;font-size:.68rem;opacity:.85}
+.statusbar nav a:hover{opacity:1;color:var(--hot)}
+
+main{max-width:900px;margin:0 auto;padding:2.2rem 1.2rem 4rem}
+
+.panel{background:var(--paper);border:var(--bar) solid var(--ink)}
+.panel + .panel{margin-top:1.6rem}
+.phead{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  background:var(--ink);color:var(--paper);
+  padding:.55rem 1rem;
+  font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.2em;font-size:.72rem;
+}
+.phead .note{color:#9aa6d6;letter-spacing:.05em;font-family:'Spline Sans Mono';text-transform:none;font-weight:500}
+.pbody{padding:1.4rem}
+.eyebrow{font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.2em;font-size:.68rem;color:var(--hot);margin:0 0 .6rem}
+h1{font-family:Archivo;font-weight:900;text-transform:uppercase;font-size:clamp(1.6rem,4vw,2.2rem);letter-spacing:-.02em;margin:0 0 .5rem}
+h1 i{display:block;font-family:Fraunces;font-style:italic;font-weight:300;text-transform:lowercase;color:var(--field-deep);font-size:clamp(1.3rem,3vw,1.6rem);margin-top:.1rem}
+.lede{max-width:70ch;color:var(--ink-soft);line-height:1.6;font-size:.88rem;margin:0}
+
+.entry{display:grid;grid-template-columns:110px 1fr;gap:1.2rem;padding:1.1rem 1.4rem;border-top:1px solid rgba(12,16,36,.14)}
+.entry:first-of-type{border-top:var(--bar) solid var(--ink)}
+.entry .date{font-family:Archivo;font-weight:800;font-size:.78rem;color:var(--ink-soft);padding-top:.15rem}
+.entry .tag{display:inline-block;font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:.62rem;padding:.15em .5em;margin-bottom:.4rem}
+.tag-add{background:var(--live);color:var(--paper)}
+.tag-fix{background:var(--hot);color:var(--paper)}
+.tag-data{background:var(--field-deep);color:var(--paper)}
+.entry p{margin:0;font-size:.86rem;line-height:1.6;color:var(--ink)}
+.entry p a{color:var(--field-deep)}
+
+@media (max-width:560px){ .entry{grid-template-columns:1fr;gap:.3rem} }
+</style>
+
+<div class="statusbar">
+  <a class="word" href="index.html">Mycel</a>
+  <span class="doc">SPEC NO. MYC-0114-RH · CHANGELOG</span>
+  <nav>
+    <a href="index.html">Overview</a>
+    <a href="docs.html">Docs</a>
+    <a href="explorer.html">Explorer</a>
+    <a href="verify.html">Verify</a>
+  </nav>
+</div>
+
+<main>
+  <section class="panel">
+    <div class="pbody">
+      <p class="eyebrow">Changelog</p>
+      <h1>Build log<i>this is day one — read it as that.</i></h1>
+      <p class="lede">MYCEL is a brand-new concept project. Every entry below happened the same day it's dated — there's no manufactured multi-month history here. This log will keep growing as the project does.</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="phead"><span>2026-08-29</span><span class="note">initial build</span></div>
+
+    <div class="entry">
+      <div class="date">2026-08-29</div>
+      <div><span class="tag tag-add">ADD</span>
+        <p>Concept site published: landing page, whitepaper, avatar and banner assets, in the register/ledger visual system.</p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="date">2026-08-29</div>
+      <div><span class="tag tag-data">DATA</span>
+        <p>Pulled 251 real trading days of Coinbase (COIN) daily close/high/low/volume from Yahoo Finance's public chart API — see <code>sim/coin-daily.csv</code>.</p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="date">2026-08-29</div>
+      <div><span class="tag tag-add">ADD</span>
+        <p>Built <code>sim/mycel-sim.js</code>: a deterministic, seeded implementation of the Sense / Grow / Reinforce / Prune / Reroute / Fossilize mechanism, run against the real COIN dataset above.</p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="date">2026-08-29</div>
+      <div><span class="tag tag-fix">FIX</span>
+        <p>Replaced every invented statistic on the landing page and whitepaper (connections, reroute time, prune counts) with the simulation's literal output. See <a href="index.html#evidence">Reproduce this</a>.</p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="date">2026-08-29</div>
+      <div><span class="tag tag-add">ADD</span>
+        <p>Published <a href="explorer.html">explorer.html</a> — the full 251-day simulation record, rendered directly from <code>sim/fossil-record.json</code>.</p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="date">2026-08-29</div>
+      <div><span class="tag tag-add">ADD</span>
+        <p>Published <a href="verify.html">verify.html</a> — SHA-256 hashes of the core documents, checkable in-browser or offline.</p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="date">2026-08-29</div>
+      <div><span class="tag tag-fix">FIX</span>
+        <p>Added an explicit non-affiliation notice: MYCEL is an independent concept project, not built or endorsed by Robinhood Markets, Inc.</p>
+      </div>
+    </div>
+  </section>
+</main>

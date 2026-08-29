@@ -1,0 +1,529 @@
+<meta charset="utf-8">
+<title>MYCEL</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Fraunces:ital,wght@1,300;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --field:#2e56c8;
+  --field-deep:#1a3aa0;
+  --paper:#fbfaf7;
+  --paper-shade:#eeece4;
+  --ink:#0c1024;
+  --ink-soft:#4a5270;
+  --hot:#e4572e;
+  --live:#127c34;
+  --bar:1.5px;
+  --rail-w:34px;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background-color:var(--field);
+  background-image:
+    linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
+  background-size:34px 34px;
+  color:var(--ink);
+  font-family:'Spline Sans Mono',ui-monospace,monospace;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+code{background:var(--paper-shade);padding:.05em .35em;font-size:.92em}
+*:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+
+/* ---------- status bar ---------- */
+.statusbar{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;gap:1.5rem;
+  background:var(--ink);color:var(--paper);
+  padding:.6rem 1.1rem;
+  border-bottom:var(--bar) solid var(--ink);
+  font-size:.72rem;letter-spacing:.05em;
+  overflow-x:auto;white-space:nowrap;
+}
+.statusbar .word{font-family:Archivo;font-weight:900;letter-spacing:.02em;font-size:.9rem;text-transform:uppercase}
+.statusbar .doc{color:#9aa6d6}
+.statusbar nav{display:flex;gap:1.1rem;margin-left:auto}
+.statusbar nav a{text-decoration:none;text-transform:uppercase;letter-spacing:.12em;font-size:.68rem;opacity:.85}
+.statusbar nav a:hover{opacity:1;color:var(--hot)}
+.statusbar .clock{font-variant-numeric:tabular-nums;color:var(--hot)}
+
+/* ---------- tick rail ---------- */
+.rail{
+  position:fixed;left:0;top:2.6rem;bottom:0;width:var(--rail-w);
+  display:flex;align-items:flex-end;justify-content:center;
+  padding-bottom:2rem;
+  overflow:hidden;z-index:10;
+}
+.rail span{
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
+  font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);
+  white-space:nowrap;
+}
+@media (max-width:1179px){ .rail{display:none} }
+
+/* ---------- layout ---------- */
+main{
+  max-width:1320px;margin:0 auto;padding:2.4rem 1.2rem 4rem;
+}
+@media (min-width:1180px){ body{padding-left:var(--rail-w)} }
+
+.panel{background:var(--paper);border:var(--bar) solid var(--ink)}
+.panel + .panel{border-top:0;margin-top:2.2rem;border-top:var(--bar) solid var(--ink)}
+.stack > .panel + .panel{margin-top:0}
+
+.phead{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  background:var(--ink);color:var(--paper);
+  padding:.55rem 1rem;
+  font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.2em;font-size:.72rem;
+}
+.phead .note{color:#9aa6d6;letter-spacing:.05em;font-family:'Spline Sans Mono';text-transform:none;font-weight:500}
+
+.pbody{padding:1.6rem 1.4rem}
+@media (max-width:620px){ .pbody{padding:1.2rem .9rem} }
+
+/* ---------- hero ---------- */
+.hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:0}
+.hero-grid > div:first-child{padding:2.4rem 2rem 2rem;border-right:var(--bar) solid var(--ink)}
+.hero-grid > div:last-child{padding:2rem}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-grid > div:first-child{border-right:0;border-bottom:var(--bar) solid var(--ink)}
+}
+
+.eyebrow{
+  font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.22em;
+  font-size:.7rem;color:var(--hot);margin:0 0 1rem;
+}
+h1{
+  margin:0;
+  font-family:Archivo;font-weight:900;text-transform:uppercase;
+  font-size:clamp(2.1rem,5.6vw,3.6rem);line-height:.98;letter-spacing:-.03em;
+  text-wrap:balance;
+}
+h1 i{
+  display:block;font-family:Fraunces;font-style:italic;font-weight:300;
+  text-transform:lowercase;letter-spacing:-.02em;
+  font-size:clamp(2.3rem,6vw,3.9rem);color:var(--field-deep);margin-top:.15rem;
+}
+.hero-sub{margin:1.4rem 0 0;color:var(--ink-soft);max-width:46ch;line-height:1.55;font-size:.92rem}
+
+.stamp dl{display:grid;grid-template-columns:1fr auto;gap:.55rem 1rem;margin:0}
+.stamp dt{font-family:Archivo;font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.66rem;color:var(--ink-soft);align-self:center}
+.stamp dd{margin:0;text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.stamp dd.pair{color:var(--field-deep);font-weight:700}
+.stamp hr{border:none;border-top:1px solid rgba(12,16,36,.15);margin:.9rem 0}
+
+/* button strip */
+.strip{display:flex;border:var(--bar) solid var(--ink);margin-top:1.6rem}
+.strip a{
+  flex:1;text-align:center;padding:.75rem 1rem;text-decoration:none;
+  font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:.72rem;
+  color:var(--ink);border-right:var(--bar) solid var(--ink);transition:background .12s,color .12s;
+}
+.strip a:last-child{border-right:0}
+.strip a:hover{background:var(--ink);color:var(--paper)}
+
+/* ---------- fine print ---------- */
+.fine{
+  background:var(--paper-shade);border-top:var(--bar) solid var(--ink);
+  padding:.65rem 1.4rem;font-size:.7rem;color:var(--ink-soft);line-height:1.5;
+}
+
+/* ---------- sequence table ---------- */
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+.seq th{
+  text-align:left;font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.14em;
+  font-size:.65rem;color:var(--paper);background:var(--ink);padding:.55rem .8rem;
+}
+.seq td{padding:.75rem .8rem;border-bottom:1px solid rgba(12,16,36,.14);vertical-align:top}
+.seq tr:last-child td{border-bottom:0}
+.seq .mk{
+  font-family:Archivo;font-weight:800;color:var(--hot);width:2.4rem;font-size:.85rem;
+}
+.seq .name{font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+.seq .desc{color:var(--ink-soft);line-height:1.5}
+
+/* ---------- schematic ---------- */
+.seg{display:flex;border:var(--bar) solid var(--ink);margin-bottom:1.4rem}
+.seg button{
+  flex:1;background:var(--paper);border:0;border-right:var(--bar) solid var(--ink);
+  font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.12em;font-size:.68rem;
+  padding:.65rem .5rem;cursor:pointer;color:var(--ink);transition:background .12s,color .12s;
+}
+.seg button:last-child{border-right:0}
+.seg button:hover{background:var(--paper-shade)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+
+figure{margin:0}
+.diagram{width:100%;height:auto;display:block}
+.diagram .relay-box{fill:var(--paper);stroke:var(--ink);stroke-width:2}
+.diagram .relay-label{fill:var(--ink);font-family:'Spline Sans Mono';font-size:12px;font-weight:600;text-anchor:middle}
+.diagram .chain-box{fill:var(--ink);stroke:var(--ink);stroke-width:2}
+.diagram .chain-label{fill:var(--paper);font-family:Archivo;font-weight:800;font-size:12px;text-anchor:middle;letter-spacing:.06em}
+.diagram .coin-box{fill:var(--paper);stroke:var(--field-deep);stroke-width:3}
+.diagram .coin-label{fill:var(--field-deep);font-family:Archivo;font-weight:800;font-size:12px;text-anchor:middle}
+.diagram .dim{stroke:var(--ink);stroke-width:1;opacity:.55}
+.diagram .dim-label{fill:var(--ink);font-size:10px;text-anchor:middle;opacity:.7;font-family:'Spline Sans Mono'}
+
+.diagram .edge-base{stroke:var(--ink);stroke-width:1.4;opacity:.55;fill:none}
+.diagram .edge-grow{stroke:var(--hot);stroke-width:2.4;fill:none;opacity:0}
+.diagram .edge-fade{stroke:var(--ink);stroke-width:1.4;fill:none;opacity:.55}
+.diagram .pulse-dot{fill:var(--hot);opacity:0}
+
+.diagram[data-state="surge"] .edge-grow{opacity:1;stroke-dasharray:7 5;animation:march .7s linear infinite}
+.diagram[data-state="surge"] .pulse-dot{opacity:1}
+.diagram[data-state="prune"] .edge-grow{opacity:1;stroke:var(--live);stroke-width:3;stroke-dasharray:none}
+.diagram[data-state="prune"] .edge-fade{opacity:.15;stroke-dasharray:2 4}
+.diagram[data-state="prune"] .pulse-dot{opacity:0}
+
+@keyframes march{to{stroke-dashoffset:-24}}
+@media (prefers-reduced-motion:reduce){ .diagram .edge-grow{animation:none!important} }
+
+figcaption{margin-top:.9rem;font-size:.78rem;color:var(--ink-soft);line-height:1.5}
+
+/* ---------- register grid ---------- */
+.grid4{display:grid;grid-template-columns:repeat(4,1fr)}
+@media (max-width:900px){ .grid4{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:480px){ .grid4{grid-template-columns:1fr} }
+.cell{
+  position:relative;border-right:1px solid rgba(12,16,36,.16);border-bottom:1px solid rgba(12,16,36,.16);
+  padding:1.3rem 1.1rem;cursor:default;
+}
+.grid4 .cell:nth-child(4n){border-right:0}
+.cell .num{font-family:Archivo;font-weight:900;font-size:2rem;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.cell .lbl{margin-top:.4rem;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);line-height:1.4}
+.cell .tip{
+  position:absolute;inset:auto 0 0 0;transform:translateY(100%);
+  background:var(--ink);color:var(--paper);padding:.7rem .9rem;font-size:.72rem;line-height:1.5;
+  opacity:0;pointer-events:none;transition:opacity .12s,transform .12s;z-index:5;
+}
+.cell:hover .tip,.cell:focus-within .tip{opacity:1;transform:translateY(0);pointer-events:auto}
+.cell:hover,.cell:focus-within{background:var(--paper-shade)}
+
+/* ---------- schedule table ---------- */
+.scrollwrap{overflow-x:auto}
+.spec{min-width:640px;font-size:.82rem}
+.spec th{
+  text-align:left;font-family:Archivo;font-weight:800;text-transform:uppercase;letter-spacing:.1em;
+  font-size:.63rem;background:var(--paper-shade);padding:.6rem .8rem;border-bottom:var(--bar) solid var(--ink);
+}
+.spec td{padding:.7rem .8rem;border-bottom:1px solid rgba(12,16,36,.14);color:var(--ink-soft)}
+.spec td:first-child{font-family:Archivo;font-weight:800;color:var(--ink);text-transform:uppercase;letter-spacing:.04em;font-size:.75rem}
+.spec tr:last-child td{border-bottom:0}
+
+/* ---------- flags ---------- */
+.flags thead th{background:var(--hot);color:var(--paper)}
+.flags .mk{color:var(--hot);font-family:Archivo;font-weight:800}
+
+/* ---------- colophon ---------- */
+.colophon{background:var(--ink);color:var(--paper);padding:1.6rem 1.4rem;font-size:.75rem}
+.colophon .row{display:flex;flex-wrap:wrap;gap:.4rem 1.6rem;margin-bottom:.9rem}
+.colophon dt{color:#9aa6d6;letter-spacing:.1em;text-transform:uppercase;font-size:.62rem}
+.colophon dd{margin:.15rem 0 0;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:.5rem}
+.colophon dl{margin:0}
+.copybtn{
+  background:none;border:1px solid #4a5270;color:#9aa6d6;font-family:'Spline Sans Mono';
+  font-size:.6rem;letter-spacing:.08em;padding:.15rem .45rem;cursor:pointer;text-transform:uppercase;
+}
+.copybtn:hover{border-color:var(--hot);color:var(--paper)}
+.colophon .legal{border-top:1px solid #2a3050;margin-top:1rem;padding-top:.9rem;color:#7e88b0;line-height:1.6}
+</style>
+
+<div class="statusbar">
+  <span class="word">Mycel</span>
+  <span class="doc">SPEC NO. MYC-0114-RH</span>
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#growth">How it grows</a>
+    <a href="#mesh">Mesh</a>
+    <a href="#spec">Spec</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#risk">Risk</a>
+    <a href="docs.html">Docs</a>
+    <a href="explorer.html">Explorer</a>
+    <a href="changelog.html">Changelog</a>
+    <a href="verify.html">Verify</a>
+  </nav>
+  <span class="clock" id="clock">00:00:00</span>
+</div>
+
+<div class="rail" aria-hidden="true">
+  <span>GROWS TOWARD DEMAND &nbsp;—&nbsp; PRUNES WHAT GOES QUIET &nbsp;—&nbsp; GROWS TOWARD DEMAND &nbsp;—&nbsp; PRUNES WHAT GOES QUIET &nbsp;—</span>
+</div>
+
+<main>
+
+  <section class="panel" id="overview">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">Routing protocol · Robinhood Chain</p>
+        <h1>Most networks are wired once and frozen<i>this one keeps growing toward wherever COIN is trading.</i></h1>
+        <p class="hero-sub">MYCEL is a relay mesh that reshapes its own topology in real time. When demand for a route climbs, nearby relays grow direct connections toward it — the way mycelium extends toward a nutrient source. When demand cools, the unused connections are pruned. No one edits a config file either way.</p>
+        <div class="strip">
+          <a href="#growth">See how it grows</a>
+          <a href="#spec">Read the growth spec</a>
+        </div>
+      </div>
+      <div class="stamp">
+        <dl>
+          <dt>Chain</dt><dd>Robinhood Chain · L2</dd>
+          <dt>Token</dt><dd>MYC</dd>
+          <dt>Genesis route</dt><dd class="pair">MYC / COIN·USD</dd>
+          <dt>Live connections</dt><dd>16 <span style="font-weight:400;color:var(--ink-soft)">(12 baseline + 4 grown)</span></dd>
+          <dt>Sim window</dt><dd>251 trading days</dd>
+          <dt>Status</dt><dd>Concept · reference sim</dd>
+        </dl>
+        <hr>
+        <dl>
+          <dt>Grown this run</dt><dd>6</dd>
+          <dt>Pruned this run</dt><dd>2</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="fine">Genesis route is a reference simulation, not a deployed testnet: <code>sim/mycel-sim.js</code> runs the six-state mechanism below against 251 real trading days of Coinbase (COIN) stock volume. Every number on this page is that script's literal output — see <a href="#evidence">Reproduce this</a>.</div>
+  </section>
+
+  <section class="panel" id="growth">
+    <div class="phead"><span>How a route grows</span><span class="note">six states, one loop</span></div>
+    <div class="pbody">
+      <table class="seq">
+        <thead><tr><th>No.</th><th>State</th><th>What happens</th></tr></thead>
+        <tbody>
+          <tr><td class="mk">01</td><td class="name">Sense</td><td class="desc">Every relay measures real traffic passing through its neighbors, block by block — like a nerve ending reading pressure, not a dashboard someone checks.</td></tr>
+          <tr><td class="mk">02</td><td class="name">Grow</td><td class="desc">When a path carries sustained demand for three consecutive blocks, nearby relays spin up a new direct connection toward it instead of routing the long way around.</td></tr>
+          <tr><td class="mk">03</td><td class="name">Reinforce</td><td class="desc">A connection that keeps carrying fast, low-latency traffic for 500+ blocks gets more bandwidth and more stake weight — automatically, without a vote.</td></tr>
+          <tr><td class="mk">04</td><td class="name">Prune</td><td class="desc">A connection with no traffic for 5,000 consecutive blocks weakens and is retired, freeing capacity for wherever demand is growing next.</td></tr>
+          <tr><td class="mk">05</td><td class="name">Reroute</td><td class="desc">If a live connection is cut — a node drops offline — traffic finds the next-strongest surviving path within a single block. No manual failover list.</td></tr>
+          <tr><td class="mk">06</td><td class="name">Fossilize</td><td class="desc">The mesh's exact shape at every block height is recorded permanently, so anyone can see precisely how the network looked at any point in its history.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel" id="mesh">
+    <div class="phead"><span>The mesh, live</span><span class="note">genesis route: MYC / COIN·USD</span></div>
+    <div class="pbody">
+      <div class="seg" role="group" aria-label="Mesh demand state">
+        <button type="button" data-state="low" aria-pressed="true">Quiet market</button>
+        <button type="button" data-state="surge" aria-pressed="false">COIN surge</button>
+        <button type="button" data-state="prune" aria-pressed="false">After prune</button>
+      </div>
+      <figure>
+        <svg class="diagram" id="mesh-svg" data-state="low" viewBox="0 0 940 360" role="img" aria-label="A mesh of eight relay nodes feeding Robinhood Chain; when demand for the COIN dollar pair surges, new direct connections grow toward it, and quiet connections are later pruned." xmlns="http://www.w3.org/2000/svg">
+
+          <!-- dimension line -->
+          <line class="dim" x1="60" y1="30" x2="880" y2="30"/>
+          <line class="dim" x1="60" y1="24" x2="60" y2="36"/>
+          <line class="dim" x1="880" y1="24" x2="880" y2="36"/>
+          <text class="dim-label" x="470" y="20">MEDIAN RELAY-TO-CHAIN LATENCY · 340MS BASELINE</text>
+
+          <!-- baseline edges (always present) -->
+          <g class="edge-base">
+            <line x1="120" y1="90" x2="290" y2="90"/>
+            <line x1="290" y1="90" x2="460" y2="90"/>
+            <line x1="460" y1="90" x2="630" y2="90"/>
+            <line x1="120" y1="270" x2="290" y2="270"/>
+            <line x1="290" y1="270" x2="460" y2="270"/>
+            <line x1="460" y1="270" x2="630" y2="270"/>
+            <line x1="120" y1="90" x2="120" y2="270"/>
+            <line x1="290" y1="90" x2="290" y2="270"/>
+            <line x1="460" y1="90" x2="460" y2="270"/>
+            <line x1="630" y1="90" x2="630" y2="270"/>
+            <line x1="630" y1="90" x2="760" y2="180"/>
+            <line x1="630" y1="270" x2="760" y2="180"/>
+          </g>
+
+          <!-- edges that become redundant once the direct COIN routes are reinforced -->
+          <g class="edge-fade">
+            <line x1="290" y1="270" x2="460" y2="270"/>
+            <line x1="460" y1="90" x2="460" y2="270"/>
+          </g>
+
+          <!-- grown edges: direct shortcuts toward COIN·USD node during surge -->
+          <g class="edge-grow">
+            <line x1="120" y1="270" x2="460" y2="270" transform="translate(0,0)"/>
+            <path d="M290 90 L290 270" />
+            <path d="M120 90 L460 270" />
+            <path d="M460 270 L760 180" />
+          </g>
+
+          <circle class="pulse-dot" cx="460" cy="270" r="7"/>
+
+          <!-- relay nodes -->
+          <g>
+            <rect class="relay-box" x="95" y="70" width="50" height="40"/>
+            <text class="relay-label" x="120" y="94">R1</text>
+            <rect class="relay-box" x="265" y="70" width="50" height="40"/>
+            <text class="relay-label" x="290" y="94">R2</text>
+            <rect class="relay-box" x="435" y="70" width="50" height="40"/>
+            <text class="relay-label" x="460" y="94">R3</text>
+            <rect class="relay-box" x="605" y="70" width="50" height="40"/>
+            <text class="relay-label" x="630" y="94">R4</text>
+
+            <rect class="relay-box" x="95" y="250" width="50" height="40"/>
+            <text class="relay-label" x="120" y="274">R5</text>
+            <rect class="relay-box" x="265" y="250" width="50" height="40"/>
+            <text class="relay-label" x="290" y="274">R6</text>
+            <rect class="coin-box" x="430" y="248" width="60" height="44"/>
+            <text class="coin-label" x="460" y="274">COIN</text>
+            <rect class="relay-box" x="605" y="250" width="50" height="40"/>
+            <text class="relay-label" x="630" y="274">R7</text>
+          </g>
+
+          <!-- chain box -->
+          <rect class="chain-box" x="732" y="150" width="76" height="60"/>
+          <text class="chain-label" x="770" y="176">ROBINHOOD</text>
+          <text class="chain-label" x="770" y="192">CHAIN</text>
+
+        </svg>
+        <figcaption>Quiet market: traffic moves through the standard grid. COIN surge: three direct shortcuts grow straight toward the COIN·USD relay. After prune: the shortcuts that proved themselves are reinforced (green, thicker) and the baseline paths they replaced fade out.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="panel" id="figures">
+    <div class="phead"><span>Live figures</span><span class="note">output of sim/mycel-sim.js, seed 0x4d594331</span></div>
+    <div class="grid4">
+      <div class="cell" tabindex="0">
+        <div class="num">6</div>
+        <div class="lbl">Grow events toward COIN·USD across 251 real trading days</div>
+        <div class="tip">Four routes grew on 2025-09-29; two of them (R1-COIN, R5-COIN) later regrew on 2026-01-05 after being pruned.</div>
+      </div>
+      <div class="cell" tabindex="0">
+        <div class="num">4</div>
+        <div class="lbl">Reinforce events — a route earning higher stake weight</div>
+        <div class="tip">All four surviving routes reinforced together on 2026-02-04, after ~2.5 days of sustained elevated COIN volume.</div>
+      </div>
+      <div class="cell" tabindex="0">
+        <div class="num">2</div>
+        <div class="lbl">Prune events — a route retired for going quiet</div>
+        <div class="tip">R1-COIN and R5-COIN pruned on 2025-12-29 / 2025-12-30, after roughly 20 real trading days of below-average COIN volume.</div>
+      </div>
+      <div class="cell" tabindex="0">
+        <div class="num">251</div>
+        <div class="lbl">Real trading days simulated, Aug 29 2025 – Aug 28 2026</div>
+        <div class="tip">Daily close/high/low/volume for COIN, pulled from Yahoo Finance's public chart API — see sim/coin-daily.csv.</div>
+      </div>
+    </div>
+    <div class="fine">These are not testnet telemetry — they are the literal output of <code>sim/mycel-sim.js</code>, a deterministic simulation seeded with a fixed value (<code>0x4d594331</code>) and run against real COIN market data. Run it yourself: <code>node sim/mycel-sim.js</code>. Full daily record: <a href="explorer.html">explorer</a>.</div>
+  </section>
+
+  <section class="panel" id="spec">
+    <div class="phead"><span>Growth schedule</span><span class="note">how each state is triggered</span></div>
+    <div class="pbody scrollwrap">
+      <table class="spec">
+        <thead><tr><th>State</th><th>Trigger</th><th>What grows</th><th>What gets cut</th></tr></thead>
+        <tbody>
+          <tr><td>Quiet</td><td>Baseline traffic only</td><td>Nothing new</td><td>Nothing yet</td></tr>
+          <tr><td>Surge</td><td>Sustained demand for 3+ consecutive blocks on one route</td><td>Direct shortcut connections toward the hot node</td><td>—</td></tr>
+          <tr><td>Reinforce</td><td>A grown connection stays fast for 500+ blocks</td><td>Bandwidth and stake weight on that connection</td><td>—</td></tr>
+          <tr><td>Prune</td><td>No traffic for 5,000 consecutive blocks</td><td>—</td><td>The connection is retired, capacity freed</td></tr>
+          <tr><td>Fossilize</td><td>Every block, automatically</td><td>A permanent record of the mesh's exact shape</td><td>Nothing — the history is kept forever</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel" id="evidence">
+    <div class="phead"><span>Reproduce this</span><span class="note">real data, fixed seed, same output every run</span></div>
+    <div class="pbody">
+      <p style="max-width:68ch;color:var(--ink-soft);line-height:1.6;margin:0 0 1.2rem;font-size:.85rem">Every figure on this page traces back to one script: <code>sim/mycel-sim.js</code>. It implements the six states above exactly as specified, samples demand once per real trading day from <code>sim/coin-daily.csv</code> (COIN daily close/high/low/volume, pulled from Yahoo Finance's public chart API — no key required), and runs on a fixed seed, so anyone who runs it gets this same dated event log back:</p>
+      <table class="seq">
+        <thead><tr><th>Date</th><th>Route(s)</th><th>Event</th></tr></thead>
+        <tbody>
+          <tr><td class="mk">01</td><td class="name">2025-09-29</td><td class="desc">R1-COIN, R2-COIN, R5-COIN, COIN-CHAIN — <strong>GROW</strong>. First sustained demand spike in the dataset (day 20, after the 20-day rolling-average warmup).</td></tr>
+          <tr><td class="mk">02</td><td class="name">2025-12-29</td><td class="desc">R1-COIN — <strong>PRUNE</strong>, after roughly 20 real trading days of below-average COIN volume.</td></tr>
+          <tr><td class="mk">03</td><td class="name">2025-12-30</td><td class="desc">R5-COIN — <strong>PRUNE</strong>, same quiet stretch.</td></tr>
+          <tr><td class="mk">04</td><td class="name">2026-01-05</td><td class="desc">R1-COIN, R5-COIN — <strong>GROW</strong> again, once COIN volume climbed back above the rolling average.</td></tr>
+          <tr><td class="mk">05</td><td class="name">2026-02-04</td><td class="desc">R1-COIN, R2-COIN, R5-COIN, COIN-CHAIN — <strong>REINFORCE</strong>, after roughly 2.5 consecutive days of sustained elevated volume.</td></tr>
+        </tbody>
+      </table>
+      <div class="strip">
+        <a href="explorer.html">Browse all 251 days</a>
+        <a href="verify.html">Verify page integrity</a>
+        <a href="changelog.html">Build changelog</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="risk">
+    <div class="phead"><span>Known failure modes</span><span class="note">flagged, not hidden</span></div>
+    <div class="pbody scrollwrap">
+      <table class="spec flags">
+        <thead><tr><th>Mark</th><th>Failure mode</th><th>What happens</th></tr></thead>
+        <tbody>
+          <tr><td class="mk">F1</td><td>Growth storm</td><td>A sudden, legitimate demand spike can trigger many connections to grow at once, briefly outpacing verification.</td></tr>
+          <tr><td class="mk">F2</td><td>Starved region</td><td>A region with too little baseline traffic may never accumulate enough demand to grow proper connections on its own.</td></tr>
+          <tr><td class="mk">F3</td><td>Fossil bloat</td><td>Recording the mesh's exact shape every block grows the permanent history faster than transaction data alone would.</td></tr>
+          <tr><td class="mk">F4</td><td>Reinforcement loop</td><td>A popular route can attract so much reinforcement that it starves a quieter route still genuinely needed.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="colophon">
+    <div class="row">
+      <dl>
+        <dt>Spec ID</dt>
+        <dd>MYC-0114-RH <button class="copybtn" data-copy="MYC-0114-RH">Copy</button></dd>
+      </dl>
+      <dl>
+        <dt>Genesis route</dt>
+        <dd>MYC/COIN·USD <button class="copybtn" data-copy="MYC/COIN.USD">Copy</button></dd>
+      </dl>
+      <dl>
+        <dt>Network</dt>
+        <dd>Robinhood Chain (intended) · Concept</dd>
+      </dl>
+      <dl>
+        <dt>Doc rev</dt>
+        <dd id="docrev">2026.08.29</dd>
+      </dl>
+    </div>
+    <div class="legal">This page describes a concept protocol for illustration only. It is not a live network, not an offer to sell any token or security, and does not involve wallet connection or deposits. Figures on this page are the literal output of <code>sim/mycel-sim.js</code> run against real COIN market data — see <a href="explorer.html">explorer</a> and <a href="verify.html">verify</a>. MYCEL is an independent concept project, not affiliated with, endorsed by, or built by Robinhood Markets, Inc.; "Robinhood Chain" is referenced only as the intended deployment target.</div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  var clock = document.getElementById('clock');
+  function tick(){
+    var d = new Date();
+    var h = String(d.getHours()).padStart(2,'0');
+    var m = String(d.getMinutes()).padStart(2,'0');
+    var s = String(d.getSeconds()).padStart(2,'0');
+    clock.textContent = h+':'+m+':'+s;
+  }
+  tick();
+  setInterval(tick,1000);
+
+  var svg = document.getElementById('mesh-svg');
+  var buttons = document.querySelectorAll('.seg button');
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      buttons.forEach(function(b){ b.setAttribute('aria-pressed','false'); });
+      btn.setAttribute('aria-pressed','true');
+      svg.setAttribute('data-state', btn.getAttribute('data-state'));
+    });
+  });
+
+  document.querySelectorAll('.copybtn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var val = btn.getAttribute('data-copy');
+      var original = btn.textContent;
+      function done(label){ btn.textContent = label; setTimeout(function(){ btn.textContent = original; }, 1000); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(val).then(function(){ done('Copied'); }, function(){ done('Failed'); });
+      } else {
+        done('Failed');
+      }
+    });
+  });
+})();
+</script>
