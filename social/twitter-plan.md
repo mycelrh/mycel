@@ -25,6 +25,20 @@ A relay network that grows toward demand and prunes what goes quiet. Nothing to 
 
 ## Launch tweet (pin this one)
 
+Short version, matches the site's current "Contract: xxxxxxxxxx (TBA at launch)" placeholder:
+
+```
+MYCEL is live: mycelprotocol.xyz
+
+A relay network that grows toward real demand and prunes what goes quiet. Genesis route: MYC/COIN·USD.
+
+CA: xxxxxxxxxx (TBA at launch)
+
+No sale. No wallet connect. Just a whitepaper and a reproducible simulation on real Coinbase (COIN) stock data.
+```
+
+Longer version:
+
 ```
 Most relay networks are wired once and frozen.
 
