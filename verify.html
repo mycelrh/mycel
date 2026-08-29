@@ -52,6 +52,9 @@ code{background:var(--paper-shade);padding:.05em .35em;font-size:.92em}
   font-size:.72rem;letter-spacing:.05em;
   overflow-x:auto;white-space:nowrap;
 }
+.statusbar .brand{display:flex;align-items:center;gap:.6rem}
+.statusbar .xlogo{display:flex;color:var(--paper);flex-shrink:0}
+.statusbar .xlogo:hover{color:var(--hot)}
 .statusbar .word{font-family:Archivo;font-weight:900;letter-spacing:.02em;font-size:.9rem;text-transform:uppercase;text-decoration:none}
 .statusbar .doc{color:#9aa6d6}
 .statusbar nav{display:flex;gap:1.1rem;margin-left:auto}
@@ -106,14 +109,18 @@ tbody tr:last-child td{border-bottom:0}
 </style>
 
 <div class="statusbar">
-  <a class="word" href="index.html">Mycel</a>
+  <div class="brand">
+    <a class="xlogo" href="https://x.com/mycelprotocol" target="_blank" rel="noopener" aria-label="MYCEL on X">
+      <svg viewBox="0 0 24 24" width="21" height="21" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+    <a class="word" href="index.html">Mycel</a>
+  </div>
   <span class="doc">SPEC NO. MYC-0114-RH · VERIFY</span>
   <nav>
     <a href="index.html">Overview</a>
     <a href="docs.html">Docs</a>
     <a href="explorer.html">Explorer</a>
     <a href="changelog.html">Changelog</a>
-    <a href="https://x.com/mycelprotocol" target="_blank" rel="noopener">X</a>
   </nav>
 </div>
 
@@ -152,8 +159,8 @@ tbody tr:last-child td{border-bottom:0}
 
 <script>
 const FILES = [
-  { name: 'index.html', hash: '002b342ac2e759935975cd6d9198066f411176bfb37ba38e3d3ff95935ea4830' },
-  { name: 'docs.html', hash: '64bc298c29ecf79794450bb51f6c90c13c640cbafe34fea6293993a1be9521cb' },
+  { name: 'index.html', hash: '7b31e85ead99020eb196abf53ad8b4fa9ceb9841a3323fdce4e46e7b3020cfa5' },
+  { name: 'docs.html', hash: '380ce5f95e7880eb0837102159600578e4c21abd4ae25bca732716674d1785ef' },
   { name: 'sim/mycel-sim.js', hash: '5b8ab14286c45e2d4e0820f441774fe10d598de861c0003dd0fc3b0cbffa81c5' },
   { name: 'sim/coin-daily.csv', hash: 'a3e26eb1f1390cbb012ec091e0db67668241e93b5450b91ea47b51381c0d21e6' },
   { name: 'sim/summary.json', hash: '97ecc877d790ac39d3264b40e6e2a5642ab3739b084e06f252d058e5b0119f81' },
