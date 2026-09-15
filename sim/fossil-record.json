@@ -4402,7 +4402,7 @@
     "day": 249,
     "date": "2026-09-11",
     "close": 175.26,
-    "volume": 7805000,
+    "volume": 7821500,
     "elevated": false,
     "aliveEdges": [
       "R1-COIN",
@@ -4421,8 +4421,8 @@
   {
     "day": 250,
     "date": "2026-09-14",
-    "close": 182.98,
-    "volume": 885099,
+    "close": 191.45,
+    "volume": 13151500,
     "elevated": false,
     "aliveEdges": [
       "R1-COIN",
