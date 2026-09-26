@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-25T13:29:57.793Z",
+  "generatedAt": "2026-09-26T13:26:48.090Z",
   "seed": 1297695537,
   "params": {
     "TICKS_PER_DAY": 200,
@@ -10,8 +10,8 @@
     "ROLLING_WINDOW": 20
   },
   "dataRange": {
-    "from": "2025-09-25",
-    "to": "2026-09-24",
+    "from": "2025-09-26",
+    "to": "2026-09-25",
     "tradingDays": 251
   },
   "liveConnections": 16,
@@ -27,10 +27,10 @@
   "totalReinforceEvents": 4,
   "totalPruneEvents": 2,
   "firstGrowEvent": {
-    "day": 21,
+    "day": 20,
     "date": "2025-10-24",
     "edge": "R1-COIN",
     "type": "GROW"
   },
-  "daysSinceFirstGrow": 229
+  "daysSinceFirstGrow": 230
 }
