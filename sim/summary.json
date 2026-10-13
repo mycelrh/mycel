@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T21:44:52.435Z",
+  "generatedAt": "2026-10-13T19:52:25.133Z",
   "seed": 1297695537,
   "params": {
     "TICKS_PER_DAY": 200,
@@ -11,8 +11,8 @@
   },
   "dataRange": {
     "from": "2025-10-13",
-    "to": "2026-10-12",
-    "tradingDays": 251
+    "to": "2026-10-13",
+    "tradingDays": 252
   },
   "liveConnections": 16,
   "baselineConnections": 12,
@@ -32,5 +32,5 @@
     "edge": "R1-COIN",
     "type": "GROW"
   },
-  "daysSinceFirstGrow": 225
+  "daysSinceFirstGrow": 226
 }
