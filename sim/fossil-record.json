@@ -4561,7 +4561,7 @@
     "day": 249,
     "date": "2026-10-16",
     "close": 173.16,
-    "volume": 9061900,
+    "volume": 9088100,
     "elevated": false,
     "aliveEdges": [
       "R1-COIN",
@@ -4580,8 +4580,28 @@
   {
     "day": 250,
     "date": "2026-10-19",
-    "close": 169.08,
-    "volume": 4766738,
+    "close": 168.45,
+    "volume": 7445900,
+    "elevated": false,
+    "aliveEdges": [
+      "R1-COIN",
+      "R2-COIN",
+      "R5-COIN",
+      "COIN-CHAIN"
+    ],
+    "reinforcedEdges": [
+      "R1-COIN",
+      "R2-COIN",
+      "R5-COIN",
+      "COIN-CHAIN"
+    ],
+    "events": []
+  },
+  {
+    "day": 251,
+    "date": "2026-10-20",
+    "close": 171.64,
+    "volume": 4556720,
     "elevated": false,
     "aliveEdges": [
       "R1-COIN",
